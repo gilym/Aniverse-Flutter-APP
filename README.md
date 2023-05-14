@@ -1,6 +1,7 @@
 # rillanime
 
-A new Flutter project.
+Project Akhir Prak TPM.
+Anime Wiki App
 
 ## Getting Started
 
