@@ -1,17 +1,21 @@
+import 'dart:math';
+import 'dart:ui';
+import 'main.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:http/http.dart';
+import 'package:hive/hive.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/viewbygenre.dart';
 import 'package:rillanime/viewmore.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'fetch.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'model/user.dart';
+
 
 
 class Dashboard extends StatefulWidget {
 
-  const Dashboard({Key? key,}) : super(key: key);
+
+  const Dashboard({Key? key, }) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -24,319 +28,391 @@ class _DashboardState extends State<Dashboard> {
   late List<dynamic> upcoming;
   late List<dynamic> airing;
   late List<dynamic> popular;
+  late List<dynamic> fav;
+
+  late Box<UserModel> _myBox;
+  late SharedPreferences _prefs;
+  bool isLoading = true;
+  bool isDataLoaded = false;
+
 
 
   @override
   void initState() {
     super.initState();
+
+    _myBox = Hive.box(boxName);
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+      });
+    });
+
     alldata = [];
     topanime = [];
-    // Fetchall.fetchall().then((data) {
-    //   setState(() {
-    //     alldata = data;
-    //   });
-    // }).catchError((error) {
-    //   print(error);
-    // });
+    genreanime = [];
+    upcoming = [];
+    airing = [];
+    popular = [];
+
+    int completedProcesses = 0;
+    int totalProcesses = 5; // Update the total number of processes
+
+    void checkCompletion() {
+      completedProcesses++;
+      if (completedProcesses == totalProcesses) {
+        setState(() {
+          isLoading = false; // Loading completed
+          isDataLoaded = true; // All data loaded successfully
+        });
+      }
+    }
+
+
 
     getTop.fetchtop().then((data) {
       setState(() {
         topanime = data;
       });
+      checkCompletion();
     }).catchError((error) {
       print(error);
+      checkCompletion();
     });
 
     getGenre.fetchGenre().then((data) {
       setState(() {
         genreanime = data;
       });
+      checkCompletion();
     }).catchError((error) {
       print(error);
+      checkCompletion();
     });
 
     getUpcoming.getupcoming().then((data) {
       setState(() {
         upcoming = data;
       });
+      checkCompletion();
     }).catchError((error) {
       print(error);
+      checkCompletion();
     });
+
     getAired.getaired().then((data) {
       setState(() {
         airing = data;
       });
+      checkCompletion();
     }).catchError((error) {
       print(error);
+      checkCompletion();
     });
+
     getMostpopular.getpopular().then((data) {
       setState(() {
         popular = data;
       });
+      checkCompletion();
     }).catchError((error) {
       print(error);
+      checkCompletion();
     });
-
   }
+
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final random = Random();
+    airing.shuffle(random);
 
-        backgroundColor: Color(0xFFEEEEEE),
-        appBar: AppBar(
-          backgroundColor: Color(0xFFEEEEEE),
+    if (isLoading) {
+      // Tampilkan tampilan loading saat data sedang dimuat
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (!isDataLoaded) {
+      // Tampilkan tampilan jika data gagal dimuat
+      return Center(
+        child: Text('Failed to load data.'),
+      );
+    } else {
+      // Tampilkan tampilan yang diinginkan ketika data berhasil dimuat
+      return Scaffold(
 
-          elevation: 0,
-        title: const Text(
-          'Anime Page',
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
-        ),
-        actions: [
+          backgroundColor: Color(0xFF191825),
+          appBar: AppBar(
+          backgroundColor: Color(0xFF191825),
 
-        ],
-      )
-,
-      body: ListView(
-        children: [
-          InkWell(
-            onTap: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => viewmore(
-                    data: topanime.sublist(0,25),
+            elevation: 0,
+            title:  Text(
+              "Hello " +Nameuser + " !!",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.logout,
+                color: Colors.white,),
+                onPressed: () {
+                  _myBox.close();
+                  _prefs.setBool('isLoggedIn', false);
+                  _prefs.remove('username');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
+                  );
+                },
+              ),
+            ],
+          )
+          ,
+          body: ListView(
+            children: [
+              InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => viewmore(
+                          data: topanime.sublist(0,25),
 
-                    title: "Top Rating Anime",
+                          title: "Top Rating Anime",
 
-                  )));
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 10),
-                  child: Text("Top Rating Anime" ,
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20
-                    ),),
+                        )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text("Top Rating Anime" ,
+                          style: TextStyle(
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                          ),),
+                      ),
+                      Icon(Icons.chevron_right,
+                        color: Colors.white,
+                        size: 35,)
+                    ],
+                  )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 260,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+
+                  itemCount: 25,
+                  itemBuilder: (context, index) {
+                    final anime = topanime[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: _buildAnimeCard(anime),
+                    );
+                  },
                 ),
-                Icon(Icons.chevron_right,
-                size: 35,)
-              ],
-            )
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 260,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => viewmore(
+                          data: genreanime,
+                          title: "Genres",
 
-              itemCount: 25,
-              itemBuilder: (context, index) {
-                final anime = topanime[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _buildAnimeCard(anime),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => viewmore(
-                      data: genreanime,
-                        title: "Genres",
+                        )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text("Genres" ,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                          ),),
+                      ),
+                      Icon(Icons.chevron_right,
+                        color: Colors.white,
+                        size: 35,)
+                    ],
+                  )
+              ),
+              SizedBox(
+                height: 50,
+                child:ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).length,
+                  itemBuilder: (context, index) {
+                    final genre1 = genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).toList()[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: _Genres(genre1),
+                    );
+                  },
+                )
+                ,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => viewmore(
+                          data: upcoming,
 
-                    )));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text("Genres" ,
-                      style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20
-                      ),),
-                  ),
-                  Icon(Icons.chevron_right,
-                    size: 35,)
-                ],
-              )
-          ),
-          SizedBox(
-            height: 50,
-            child:ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).length,
-              itemBuilder: (context, index) {
-                final genre1 = genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).toList()[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _Genres(genre1),
-                );
-              },
-            )
-            ,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => viewmore(
-                      data: upcoming,
+                          title: "Upcoming",
 
-                      title: "Upcoming",
+                        )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text("Upcoming" ,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                          ),),
+                      ),
+                      Icon(Icons.chevron_right,
+                        color: Colors.white,
+                        size: 35,)
+                    ],
+                  )
+              ),
+              SizedBox(
+                height: 260,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
 
-                    )));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text("Upcoming" ,
-                      style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20
-                      ),),
-                  ),
-                  Icon(Icons.chevron_right,
-                    size: 35,)
-                ],
-              )
-          ),
-          SizedBox(
-            height: 260,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+                  itemCount:  upcoming.length,
+                  itemBuilder: (context, index) {
+                    final anime = upcoming[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: _buildAnimeCard(anime),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => viewmore(
+                          data: airing,
+                          title: "Currently Airing",
 
-              itemCount:  upcoming.length,
-              itemBuilder: (context, index) {
-                final anime = upcoming[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _buildAnimeCard(anime),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => viewmore(
-                      data: airing,
+                        )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text("Currently Airing" ,
+                          style: TextStyle(
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                          ),),
+                      ),
+                      Icon(Icons.chevron_right,
+                        color: Colors.white,
+                        size: 35,)
+                    ],
+                  )
+              ),
+              SizedBox(
+                height: 230,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: PageScrollPhysics(),
 
-                      title: "Currently Airing",
+                  itemCount:  airing.length,
+                  itemBuilder: (context, index) {
+                    final anime = airing[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Aired(anime),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => viewmore(
+                          data: popular,
 
-                    )));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text("Currently Airing" ,
-                      style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20
-                      ),),
-                  ),
-                  Icon(Icons.chevron_right,
-                    size: 35,)
-                ],
-              )
-          ),
-          SizedBox(
-            height: 260,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+                          title: "Most Popular",
 
-              itemCount:  airing.length,
-              itemBuilder: (context, index) {
-                final anime = airing[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _buildAnimeCard(anime),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => viewmore(
-                      data: popular,
+                        )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text("Most Popular" ,
+                          style: TextStyle(
+                              fontFamily: "Poppins",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20
+                          ),),
+                      ),
+                      Icon(Icons.chevron_right,
+                        color: Colors.white,
+                        size: 35,)
+                    ],
+                  )
+              ),
+              SizedBox(
+                height: 260,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
 
-                      title: "Most Popular",
-
-                    )));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text("Most Popular2" ,
-                      style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20
-                      ),),
-                  ),
-                  Icon(Icons.chevron_right,
-                    size: 35,)
-                ],
-              )
-          ),
-          SizedBox(
-            height: 260,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-
-              itemCount:  popular.length,
-              itemBuilder: (context, index) {
-                final anime = popular[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: _buildAnimeCard(anime),
-                );
-              },
-            ),
-          ),
-
-
-
-        ],
-      )
-
-
-    );
+                  itemCount:  popular.length,
+                  itemBuilder: (context, index) {
+                    final anime = popular[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: _buildAnimeCard(anime),
+                    );
+                  },
+                ),
+              ),
+            ],
+          )
+      );
+    }
   }
   Container _Genres (Map<String, dynamic> Gen){
     final name = Gen ['name'] as String;
@@ -356,9 +432,9 @@ class _DashboardState extends State<Dashboard> {
           padding: const EdgeInsets.all(0.0),
           child: Chip(
             label: Text(name),
-            backgroundColor: Colors.grey[300],
+            backgroundColor: Color(0xFF4F576F),
             labelStyle: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
                 fontFamily: "Raleway"
@@ -498,5 +574,229 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
     );
+  }
+
+  Container Aired(Map<String, dynamic> animeData) {
+    final temp = animeData;
+    final title = animeData['title'] as String?;
+    final imageUrl = animeData['images']['jpg']['image_url'] as String?;
+    final score = animeData['score'] is int ? animeData['score'].toDouble() : animeData['score'];
+    final url = animeData['url'] as String?;
+    final synopsis = animeData['synopsis'] as String?;
+    final id = animeData['mal_id'] as int;
+    final trailer = animeData['trailer']['url'] as String?;
+    final genres = (animeData['genres'] as List).map((
+        genre) => genre['name'] as String).toList();
+    final episodes = animeData['episodes'] as int?;
+    final duration = animeData['duration'] as String?;
+    final rank = animeData['rank'] as int?;
+    final favorite = animeData['favorites'] as int?;
+    final member = animeData['members'] as int?;
+    final popularity = animeData['popularity'] as int?;
+    final status =animeData['status'] as String?;
+    final season =animeData['season'] as String?;
+    final studios = animeData['studios'];
+    final studio = studios != null && studios.isNotEmpty && studios[0] != null ? studios[0]['name'] as String? : '';
+    final source =animeData['source'] as String?;
+    final rating =animeData['rating'] as String?;
+    final idyoutube = animeData['trailer']['youtube_id'] as String?;
+    final type =animeData['type'] as String?;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+
+
+
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      width: 370,
+
+
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AnimeDetailScreen(
+                title: title,
+                imageUrl: imageUrl,
+                url: url,
+                synopsis: synopsis,
+                id: id,
+                score: score,
+                trailer: trailer,
+                genres: genres,
+                episodes: episodes,
+                duration: duration,
+                ranking: rank,
+                favorite: favorite,
+                member: member,
+                popularity: popularity,
+                status: status,
+                season: season,
+                studio: studio,
+                source: source,
+                rating: rating,
+                idyoutube: idyoutube,
+                type: type,
+              )));
+        },
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl!),
+                  fit: BoxFit.cover,
+                ),
+                  borderRadius: BorderRadius.circular(10)
+              ),
+            ),
+            Container(
+decoration: BoxDecoration(
+  color: Colors.black.withOpacity(0.7),
+    borderRadius: BorderRadius.circular(10)
+),
+
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 120,
+                decoration: BoxDecoration(
+                     color: Colors.black,
+                    borderRadius: BorderRadius.circular(10)
+                ),
+
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 190,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(imageUrl!),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.7),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    score?.toString() ?? 'N/A',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontFamily: "Poppins",
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        height: 90,
+
+                        child:
+                        Text(
+                          title!,
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: "Raleway",
+                          ),
+                        ),
+                      )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 90,
+              left: 150,
+              right: 0,
+              child: SizedBox(
+                height: 20,
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: genres?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final genreText = index == (genres?.length ?? 0) - 1
+                        ? (genres?[index] ?? 'Unknown Genre')
+                        : '${genres?[index]}, ';
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Text(
+                        genreText,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          fontFamily: "Raleway",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+
+
+
+
+
+          ],
+        ),
+      ),
+    );
+
+
   }
 }

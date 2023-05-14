@@ -30,7 +30,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
     }
     else {
 
-      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)  ).toList();
       return filteredAnime;
     }
   }
@@ -72,6 +72,18 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
       return filteredAnime;
     }
   }
+  List<dynamic> getOVAFilteredData( ) {
+
+      if (search.isEmpty ) {
+      var anime = topanime.where((anime) => anime['type'] == "OVA").toList();
+      return anime;
+    }
+    else {
+        var anime = topanime.where((anime) => anime['type'] == "OVA").toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      return filteredAnime;
+    }
+  }
   List<dynamic> getPopularityFilteredData( ) {
 
       if (search.isEmpty ) {
@@ -96,13 +108,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
     alldata = [];
     topanime = [];
 
-    Fetchall.fetchall().then((data) {
-      setState(() {
-        alldata = data;
-      });
-    }).catchError((error) {
-      print(error);
-    });
+
 
     getTop.fetchtop().then((data) {
       setState(() {
@@ -119,9 +125,9 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEEEEEE),
+      backgroundColor: Color(0xFF191825),
       appBar: AppBar(
-        backgroundColor: Color(0xFFEEEEEE),
+        backgroundColor: Color(0xFF191825),
         elevation: 0,
         title: Container(
           decoration: BoxDecoration(
@@ -134,6 +140,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: TextFormField(
+
                     onChanged: (value) {
                       setState(() {
                         search = value.toLowerCase();
@@ -142,6 +149,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                     decoration: InputDecoration(
                       hintText: 'Search Anime'+topanime.length.toString(),
                       border: InputBorder.none,
+
                     ),
                   ),
                 ),
@@ -158,7 +166,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
              margin: EdgeInsets.only(right: 10),
              child:
              Icon(Icons.filter_list ,
-               color: Colors.black,
+               color: Colors.white,
                size: 35,),
            ),
          )
@@ -177,11 +185,13 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                 children: List.generate( cek == "score" ? getScoreFilteredData().length :
                 cek == "popularity" ? getPopularityFilteredData().length :
                 cek=="TV" ? getTVFilteredData().length :
+                cek=="OVA" ? getOVAFilteredData().length :
                 cek=="Movie"?getMovieFilteredData().length : getFilteredData().length
         , (index) {
                   final anime = cek=="score" ? getScoreFilteredData()[index] :
                   cek == "popularity" ? getPopularityFilteredData()[index]:
                   cek=="TV" ? getTVFilteredData()[index]:
+                  cek=="OVA" ? getOVAFilteredData()[index]:
                   cek=="Movie"?getMovieFilteredData()[index]:getFilteredData()[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3,vertical: 3),
@@ -196,9 +206,14 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
 
   void popup() {
     showModalBottomSheet(
+      backgroundColor: Colors.transparent,
       context: context,
       builder: (BuildContext context) {
         return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+            color:  Color(0xFF191825),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -206,30 +221,38 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: 20,top: 10),
                     child: Text(
                       'Filter',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: "Raleway",
+                        color: Colors.white,
                         fontSize: 20,
                       ),
                     ),
                   ),
+
                   IconButton(
-                    icon: Icon(Icons.close),
+                    icon: Icon(Icons.close,
+                        color: Colors.white),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                 ],
               ),
-              Divider(),
+              Divider(
+
+                thickness: 1,
+                color: Colors.grey[600]?.withAlpha(40),
+              ),
 
               listile("Rating", "score"),
               listile("Popularity", "popularity"),
               listile("TV", "TV"),
               listile("Movie", "Movie"),
+              listile("OVA", "OVA"),
 
 
 
@@ -264,6 +287,7 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
             title,
             style: TextStyle(
               fontSize: 18,
+              color: Colors.white
             ),
           ),
           Spacer(),

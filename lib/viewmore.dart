@@ -43,17 +43,17 @@ class _viewmoreState extends State<viewmore> {
 
 
     return Scaffold(
-      backgroundColor: Color(0xFFEEEEEE),
+      backgroundColor: Color(0xFF191825),
       appBar: AppBar(
-        backgroundColor: Color(0xFFEEEEEE),
+        backgroundColor: Color(0xFF191825),
         elevation: 0,
         iconTheme: IconThemeData(
-          color: Colors.black, // Ubah warna icon menjadi hitam
+          color: Colors.white, // Ubah warna icon menjadi hitam
         ),
         title: Text(
           widget.title,
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontFamily: "Poppins",
 
             fontSize: 20,
@@ -121,9 +121,9 @@ class _viewmoreState extends State<viewmore> {
           padding: const EdgeInsets.all(01.0),
           child: Chip(
             label: Text(name),
-            backgroundColor: Colors.grey[300],
+            backgroundColor:Color(0xFF4F576F),
             labelStyle: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
                 fontFamily: "Raleway"

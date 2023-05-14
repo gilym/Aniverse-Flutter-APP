@@ -23,17 +23,17 @@ class _viewbygenreState extends State<viewbygenre> {
 
 
     return Scaffold(
-      backgroundColor: Color(0xFFEEEEEE),
+        backgroundColor: Color(0xFF191825),
       appBar: AppBar(
-        backgroundColor: Color(0xFFEEEEEE),
+        backgroundColor: Color(0xFF191825),
         elevation: 0,
         iconTheme: IconThemeData(
-          color: Colors.black, // Ubah warna icon menjadi hitam
+          color: Colors.white, // Ubah warna icon menjadi hitam
         ),
         title: Text(
           widget.title,
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontFamily: "Poppins",
 
             fontSize: 20,

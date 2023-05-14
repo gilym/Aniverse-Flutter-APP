@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:rillanime/bottomnavbar.dart';
 import '../main.dart';
-import 'dashboard.dart';
+
 import '../model/user.dart';
 import 'register.dart';
 import 'package:hive/hive.dart';
@@ -17,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late Box<UserModel> _myBox;
   late SharedPreferences _prefs;
+  bool _rememberMe = false;
 
   final _formKey = GlobalKey<FormState>();
   String _inputUsername = "";
@@ -26,12 +28,23 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _myBox = Hive.box(boxName);
+    _openBox();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
       });
     });
+  }
+
+  // @override
+  // void dispose() {
+  //   _myBox.close();
+  //   super.dispose();
+  // }
+
+  void _openBox() async {
+    await Hive.openBox<UserModel>(boxName);
+    _myBox = Hive.box<UserModel>(boxName);
   }
 
   void _submit() {
@@ -42,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
       if (!_myBox.containsKey(_inputUsername)) {
         // Check if username exists during login
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid username or password')),
+          const SnackBar(content: Text('Invalid username')),
         );
         return;
       }
@@ -50,15 +63,23 @@ class _LoginPageState extends State<LoginPage> {
       final user = _myBox.get(_inputUsername);
       if (_inputPassword == user!.password) {
         // Save user's session
-        _prefs.setBool('isLoggedIn', true);
-        _prefs.setString('username', _inputUsername);
+        Nameuser=_inputUsername;
+
+        print(user.favorites );
+
+        if(_rememberMe){
+          _prefs.setBool('isLoggedIn', true);
+          _prefs.setString('username', _inputUsername);
+        } else {
+          _prefs.remove('isLoggedIn');
+        }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => DashboardPage()),
+          MaterialPageRoute(builder: (context) => BotNavBar()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid username or password')),
+          SnackBar(content: Text('Invalid password')),
         );
       }
 
@@ -84,14 +105,13 @@ class _LoginPageState extends State<LoginPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: EdgeInsets.all(16.0),
             children: <Widget>[
-              Image.network(
-                'https://cdn.pixabay.com/photo/2020/10/26/16/33/naruto-5687813_960_720.png',
+              Image.asset(
+                'assets/images/login.jpg',
                 height: 220,
               ),
               SizedBox(height: 25.0),
@@ -131,7 +151,18 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: _submit,
                 child: Text('Login'),
               ),
-              SizedBox(height: 16.0),
+              // SizedBox(height: 4.0),
+              CheckboxListTile(
+                title: Text("Remember me"),
+                value: _rememberMe,
+                onChanged: (newValue) {
+                  setState(() {
+                    _rememberMe = newValue!;
+                  });
+                },
+              ),
+
+              // SizedBox(height: 5.0),
               Center(child: Text("Don't have an account?")),
               SizedBox(height: 8.0),
               ElevatedButton(

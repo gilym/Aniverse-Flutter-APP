@@ -1,29 +1,42 @@
+
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rillanime/bottomnavbar.dart';
-import 'package:rillanime/dahsboard.dart';
-import 'package:rillanime/fetch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/user.dart';
+import 'login.dart';
+
+String boxName = 'userBox';
+String Nameuser='';
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  await Hive.initFlutter();
+  Hive.registerAdapter<UserModel>(UserModelAdapter());
+  await Hive.openBox<UserModel>(boxName);
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-
       debugShowCheckedModeBanner: false,
+      title: 'Tugas UAS TPM',
       theme: ThemeData(
-
-        primarySwatch: Colors.blue
-
+        primaryColor: Color(0xFF191825),
       ),
-      home: BotNavBar()
+      home: isLoggedIn ? BotNavBar() : const LoginPage(),
+      routes: {
+        '/botNavBar': (context) => BotNavBar(),
+      },
     );
   }
 }
