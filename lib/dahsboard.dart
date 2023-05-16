@@ -9,14 +9,8 @@ import 'package:rillanime/viewmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'fetch.dart';
 import 'model/user.dart';
-
-
-
 class Dashboard extends StatefulWidget {
-
-
   const Dashboard({Key? key, }) : super(key: key);
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -29,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
   late List<dynamic> airing;
   late List<dynamic> popular;
   late List<dynamic> fav;
-
+late String username='';
   late Box<UserModel> _myBox;
   late SharedPreferences _prefs;
   bool isLoading = true;
@@ -47,6 +41,9 @@ class _DashboardState extends State<Dashboard> {
         _prefs = prefs;
       });
     });
+
+    _openBox();
+
 
     alldata = [];
     topanime = [];
@@ -70,7 +67,11 @@ class _DashboardState extends State<Dashboard> {
 
 
 
+
+loadUsername();
+
     getTop.fetchtop().then((data) {
+
       setState(() {
         topanime = data;
       });
@@ -121,17 +122,63 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _prefs = prefs;
+      username = prefs.getString('username') ?? '';
+    });
+
+  }
+
+  void _openBox() async {
+    await Hive.openBox<UserModel>(boxName);
+    _myBox = Hive.box<UserModel>(boxName);
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
-    airing.shuffle(random);
-
+print(username);
+final random = Random();
+airing.shuffle(random);
+final user = _myBox.get(username);
     if (isLoading) {
       // Tampilkan tampilan loading saat data sedang dimuat
-      return Center(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        backgroundColor: Color(0xFF191825),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF191825),
+          elevation: 0,
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 15,
+                backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
+
+
+              ),
+              SizedBox(width: 10),
+              Text(
+                "Hello, ${user?.Name}",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Raleway",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+
+        ),
+
+
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     } else if (!isDataLoaded) {
       // Tampilkan tampilan jika data gagal dimuat
@@ -144,33 +191,29 @@ class _DashboardState extends State<Dashboard> {
 
           backgroundColor: Color(0xFF191825),
           appBar: AppBar(
-          backgroundColor: Color(0xFF191825),
-
+            backgroundColor: Color(0xFF191825),
             elevation: 0,
-            title:  Text(
-              "Hello " +Nameuser + " !!",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            title: Row(
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
+
+
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "Hello, ${user?.Name}",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Raleway",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.logout,
-                color: Colors.white,),
-                onPressed: () {
-                  _myBox.close();
-                  _prefs.setBool('isLoggedIn', false);
-                  _prefs.remove('username');
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
-                  );
-                },
-              ),
-            ],
+
           )
           ,
           body: ListView(
@@ -350,8 +393,6 @@ class _DashboardState extends State<Dashboard> {
                 height: 230,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: PageScrollPhysics(),
-
                   itemCount:  airing.length,
                   itemBuilder: (context, index) {
                     final anime = airing[index];
@@ -370,10 +411,10 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => viewmore(
                           data: popular,
-
                           title: "Most Popular",
-
-                        )));
+                          )
+                        )
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

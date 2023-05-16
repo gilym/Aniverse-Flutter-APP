@@ -14,6 +14,7 @@ String Nameuser='';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   await Hive.initFlutter();
   Hive.registerAdapter<UserModel>(UserModelAdapter());
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
       title: 'Tugas UAS TPM',
       theme: ThemeData(
         primaryColor: Color(0xFF191825),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Color(0xFF191825), // Atur warna latar belakang di sini
+        ),
       ),
       home: isLoggedIn ? BotNavBar() : const LoginPage(),
       routes: {

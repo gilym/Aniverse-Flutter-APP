@@ -33,6 +33,7 @@ dependencies:
   hive: ^2.2.3
   shared_preferences: ^2.1.1
   build_runner: ^2.1.4
+  hive_generator: ^2.0.0
   hive_flutter: ^1.1.0
   encrypt: ^5.0.1
   http: ^0.13.4
@@ -76,7 +77,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/deku.jpg
+    - assets/deku.png
+    - assets/gojo.jpg
+    - assets/naruto.png
+    - assets/tanjiro.png
+    - assets/luffy.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

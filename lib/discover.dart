@@ -18,7 +18,7 @@ String cek ="";
 class _discoverState extends State<discover> with TickerProviderStateMixin{
   late List<dynamic> topanime;
   late List<dynamic> alldata;
-
+late bool isLoading;
 
   List<dynamic> getFilteredData( ) {
 
@@ -107,15 +107,18 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
     super.initState();
     alldata = [];
     topanime = [];
+    isLoading = true;
 
 
 
     getTop.fetchtop().then((data) {
       setState(() {
         topanime = data;
+        isLoading = false;
       });
     }).catchError((error) {
       print(error);
+      isLoading = false;
     });
 
 
@@ -170,12 +173,11 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                size: 35,),
            ),
          )
-
-
         ],
 
       ),
-      body: ListView(
+      body: isLoading // Tampilkan loading jika sedang mengambil data
+          ? Center(child: CircularProgressIndicator()) :  ListView(
         children: [
           SizedBox(
               height: 701,
@@ -243,19 +245,14 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
                 ],
               ),
               Divider(
-
                 thickness: 1,
                 color: Colors.grey[600]?.withAlpha(40),
               ),
-
               listile("Rating", "score"),
               listile("Popularity", "popularity"),
               listile("TV", "TV"),
               listile("Movie", "Movie"),
               listile("OVA", "OVA"),
-
-
-
               Divider(),
               ListTile(
                 title: Text(
@@ -280,32 +277,39 @@ class _discoverState extends State<discover> with TickerProviderStateMixin{
 
 
   Widget listile(String title , String value){
-    return ListTile(
-      title: Row(
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white
-            ),
-          ),
-          Spacer(),
-          cek == value
-              ? Icon(
-            Icons.check,
-            color: Colors.green,
-          )
-              : Container(),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+        color: cek == value ? Color(0xFF865DFF).withOpacity(0.3) : null,
+        borderRadius: BorderRadius.circular(25)
       ),
-      onTap: () {
-        setState(() {
-          cek = value;
-        });
-        Navigator.pop(context);
-      },
+      child: ListTile(
+        title: Row(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+            Spacer(),
+            cek == value
+                ? Icon(
+              Icons.check,
+              color: Colors.green,
+            )
+                : Container(),
+          ],
+        ),
+        onTap: () {
+          setState(() {
+            cek = value;
+          });
+          Navigator.pop(context);
+        },
+      ),
     );
+
   }
 
 

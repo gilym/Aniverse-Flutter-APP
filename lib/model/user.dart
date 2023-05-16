@@ -10,5 +10,11 @@ class UserModel extends HiveObject {
   @HiveField(1)
   List<int>? favorites;
 
-  UserModel({required this.password,  this.favorites});
+  @HiveField(2)
+  String? Name;
+
+  @HiveField(3)
+  String? image;
+
+  UserModel({required this.password, this.favorites, this.Name, this.image});
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:rillanime/DetailPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
 import 'fetch.dart';
 
@@ -17,17 +18,36 @@ class favorites extends StatefulWidget {
 class _favoritesState extends State<favorites> {
   late Box<UserModel> _myBox;
   late Future<List<dynamic>> favData;
+  late SharedPreferences _prefs;
+  late String username='';
   @override
   void initState() {
     super.initState();
 
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+      });
+    });
+
+
     _openBox();
-    favData = GetFavorite().getFavoritesData().catchError((error) {
-      print(error);
-      return [];
+    loadUsername().then((_) {
+      favData = GetFavorite().getFavoritesData(username).catchError((error) {
+        print(error);
+        return [];
+      });
     });
   }
 
+  loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _prefs = prefs;
+      username = prefs.getString('username') ?? '';
+
+    });
+  }
 
   void _openBox() async {
     await Hive.openBox<UserModel>(boxName);
@@ -59,55 +79,71 @@ class _favoritesState extends State<favorites> {
 
             if (fav.isEmpty) {
               return Center(
-                child: Text('Tidak ada favorit yang tersimpan.'),
+                child: Text('Tidak ada favorit yang tersimpan.',
+                style: TextStyle(
+                    color: Colors.white,
+                  fontSize: 17,
+                  fontFamily: "Raleway"
+                ),
+                ),
               );
             }
 
-            return ListView(
-              children: [
-                SizedBox(
-                  height: 700,
-                  child: ValueListenableBuilder(
-                    valueListenable: _myBox.listenable(),
-                    builder: (context, Box<UserModel> box, _) {
-                      if (box.isEmpty) {
-                        return Center(
-                          child: Text('Tidak ada favorit yang tersimpan.'),
-                        );
-                      }
+            return ValueListenableBuilder(
+              valueListenable: _myBox.listenable(),
+              builder: (context, Box<UserModel> box, _) {
+                if (box.isEmpty) {
+                  return Center(
+                    child: Text('Tidak ada favorit yang tersimpan.',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: "Raleway"
+                      ),),
+                  );
+                }
 
-                      final user = _myBox.get(Nameuser);
+                final user = _myBox.get(username);
 
-                      if (user == null ||
-                          user.favorites == null ||
-                          user.favorites!.isEmpty) {
-                        return Center(
-                          child: Text('Tidak ada favorit yang tersimpan.'),
-                        );
-                      }
+                if (user == null ||
+                    user.favorites == null ||
+                    user.favorites!.isEmpty) {
+                  return Center(
+                    child: Text('Tidak ada favorit yang tersimpan.',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: "Raleway"
+                        ),),
+                  );
+                }
 
-                      return GridView.count(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.7,
-                        children: List.generate(fav.length, (index) {
-                          final favoriteId = fav[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 3, vertical: 3),
-                            child: _buildAnimeCard(favoriteId),
-                          );
-                        }),
-                      );
-                    },
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.7,
                   ),
-                )
-              ],
+                  itemCount: fav.length,
+                  itemBuilder: (context, index) {
+                    final favoriteId = fav[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                        vertical: 3,
+                      ),
+                      child: _buildAnimeCard(favoriteId),
+                    );
+                  },
+                );
+              },
             );
           }
         },
       ),
     );
   }
+
 
   Container _buildAnimeCard(Map<String, dynamic> animeData) {
     final temp = animeData;

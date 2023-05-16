@@ -2,9 +2,9 @@
 
 part of 'user.dart';
 
-// **
+// **************************************************************************
 // TypeAdapterGenerator
-// **
+// **************************************************************************
 
 class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
@@ -19,17 +19,23 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
     return UserModel(
       password: fields[0] as String,
       favorites: (fields[1] as List?)?.cast<int>(),
+      Name: fields[2] as String?,
+      image: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.password)
       ..writeByte(1)
-      ..write(obj.favorites);
+      ..write(obj.favorites)
+      ..writeByte(2)
+      ..write(obj.Name)
+      ..writeByte(3)
+      ..write(obj.image);
   }
 
   @override

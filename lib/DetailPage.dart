@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'main.dart';
@@ -67,37 +68,75 @@ class AnimeDetailScreen extends StatefulWidget {
 }
 class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
   bool _isExpanded = false;
-bool _isFavorite =false;
+  bool _isFavorite = false;
   bool _showAppBar = false;
   late Box<UserModel> _myBox;
-  final String boxName = 'userBox'; // Ganti dengan nama box yang sesuai
+  final String boxName = 'userBox';
+  late String username = '';
+  late Future<List<dynamic>> favData;
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
     super.initState();
-    _openBox();
+    loadUsername().then((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
+    });
+
+
+
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+      });
+    });
   }
+
+  Future<void> loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _prefs = prefs;
+      username = prefs.getString('username') ?? '';
+    });
+  }
+
+
 
   void _openBox() async {
     await Hive.openBox<UserModel>(boxName);
     _myBox = Hive.box<UserModel>(boxName);
+print(username);
+    final userModel = _myBox.get(username);
+    if (userModel != null && userModel.favorites != null) {
+      setState(() {
+        _isFavorite = userModel.favorites!.contains(widget.id);
+      });
+    } else {
+      _isFavorite = false;
+    }
+    print(_isFavorite);
   }
   void _updateFavoriteStatus() {
-    final userModel = _myBox.get(Nameuser);
+
+    final userModel = _myBox.get(username);
     if (userModel != null) {
       final favoritesList = userModel.favorites ?? [];
       if (_isFavorite) {
         favoritesList.add(widget.id);
+        userModel.favorites = favoritesList;
+        userModel.save();
+        _myBox.put(Nameuser, userModel);
         print("Berhasil menambahkan ke favorit");
       } else {
         favoritesList.remove(widget.id);
+        userModel.favorites = favoritesList;
+        userModel.save();
+        _myBox.put(Nameuser, userModel);
         print("Berhasil menghapus dari favorit");
       }
-      userModel.favorites = favoritesList;
-      userModel.save();
-      _myBox.put(Nameuser, userModel); // Simpan kembali userModel ke dalam box
     }
   }
+
 
 
 
@@ -162,8 +201,8 @@ bool _isFavorite =false;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 220,
-                        width: 150,
+                        height: 190,
+                        width: 120,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
@@ -171,7 +210,7 @@ bool _isFavorite =false;
                           ),
                         ),
                       ),
-                      SizedBox(width: 16),
+                      SizedBox(width: 17),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

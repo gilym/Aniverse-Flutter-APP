@@ -32,22 +32,17 @@ import 'model/user.dart';
 class getTop {
   static Future<List<dynamic>> fetchtop() async {
     List<dynamic> animeData = [];
-
     try {
-      for (int page = 1; page <= 70; page++) { // ambil data pada halaman 1-5
+      for (int page = 1; page <= 95; page++) { // ambil data pada halaman 1-5
         final url = "https://api.jikan.moe/v4/top/anime?page=$page";
         final file = await DefaultCacheManager().getSingleFile(url);
         final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));
-
         final data = response['data'] as List<dynamic>;
         animeData.addAll(data);
-
       }
-
     } catch (error) {
       print(error);
     }
-
     return animeData;
   }
 }
@@ -110,6 +105,7 @@ class getAired {
   }
 }
 class getMostpopular {
+
   static Future<List<dynamic>> getpopular() async {
     List<dynamic> animeData = [];
 
@@ -137,16 +133,18 @@ class GetFavorite {
     _myBox = Hive.box<UserModel>(boxName);
   }
 
-  Future<List<dynamic>> getFavoritesData() async {
+  Future<List<dynamic>> getFavoritesData(String username) async {
     List<dynamic> animeData = [];
 
     try {
+
       await _openBox();
-      final user = _myBox!.get(Nameuser);
+      final user = _myBox!.get(username);
 
       if (user != null && user.favorites != null && user.favorites!.isNotEmpty) {
-        for (int favorite in user.favorites!) {
 
+        for (int favorite in user.favorites!) {
+print(favorite);
           final url = "https://api.jikan.moe/v4/anime/$favorite";
           final file = await DefaultCacheManager().getSingleFile(url);
           final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));

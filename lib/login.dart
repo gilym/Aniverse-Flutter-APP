@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rillanime/bottomnavbar.dart';
+import 'package:rillanime/choseprofile.dart';
 import '../main.dart';
 
 import '../model/user.dart';
@@ -18,12 +19,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late Box<UserModel> _myBox;
   late SharedPreferences _prefs;
-  bool _rememberMe = false;
+  bool _rememberMe = true;
 
   final _formKey = GlobalKey<FormState>();
   String _inputUsername = "";
   String _inputPassword = "";
-  bool _obscureText = true;
+  bool _obscureText = false;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submit() {
+    print("masuk");
     final form = _formKey.currentState;
     if (form!.validate()) {
       form.save();
@@ -65,13 +67,16 @@ class _LoginPageState extends State<LoginPage> {
         // Save user's session
         Nameuser=_inputUsername;
 
-        print(user.favorites );
+        print(user.image );
 
         if(_rememberMe){
           _prefs.setBool('isLoggedIn', true);
           _prefs.setString('username', _inputUsername);
         } else {
           _prefs.remove('isLoggedIn');
+
+
+          _prefs.setString('username', _inputUsername);
         }
         Navigator.pushReplacement(
           context,
@@ -90,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegisterPage(),
+        builder: (context) => const choseprofile(),
       ),
     );
   }
@@ -98,87 +103,182 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-        title: Text('Login'),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              Image.asset(
-                'assets/images/login.jpg',
-                height: 220,
-              ),
-              SizedBox(height: 25.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xFF191825),
+      // appBar: AppBar(
+      //   // backgroundColor: Color(0xFF191825),
+      //   backgroundColor: Color(0xFF865DFF),
+      //   elevation: 0,
+      //   // title: Text('Logi1n'),
+      //   // automaticallyImplyLeading: false,
+      //   // centerTitle: true,
+      // ),
+      body: Form(
+        key: _formKey,
+        child: Stack(
+          children: [
+            Container(
+              child: ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black, Colors.transparent],
+                  ).createShader(bounds);
+                },
+                blendMode: BlendMode.dstIn,
+                child: Image.asset(
+                  "assets/deku.png",
+                  fit: BoxFit.cover,
                 ),
-                validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
-                onSaved: (value) => _inputUsername = value!.toLowerCase(),
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.grey,
+            ),
+
+
+            Container(
+              margin: EdgeInsets.only(top: 250),
+              height: 600,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30),),
+                color: Color(0xFF191825),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Login",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontFamily: "Poppins"
+                  ),),
+                  SizedBox(height: 60,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person,
+                        color: Colors.grey,),
+                      labelText: 'Username',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Set border radius
+                      ),
+                      labelStyle: TextStyle(color: Colors.white), // Set label text color
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                        borderRadius: BorderRadius.circular(30.0), // Set border radius
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Set focused border color
+                        borderRadius: BorderRadius.circular(20.0), // Set border radius
+                      ),
                     ),
-                    onPressed: () {
+                    style: TextStyle(color: Colors.white),
+                    validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
+                    onSaved: (value) => _inputUsername = value!.toLowerCase(),
+                  ),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock,
+                        color: Colors.grey,),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+
+                      labelStyle: TextStyle(color: Colors.white), // Set label text color
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                        borderRadius: BorderRadius.circular(30.0), // Set border radius
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Set focused border color
+                        borderRadius: BorderRadius.circular(20.0), // Set border radius
+                      ),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                    validator: (value) =>
+                    value!.isEmpty ? 'Please enter a password' : null,
+                    onSaved: (value) => _inputPassword = value!,
+                    obscureText: _obscureText,
+                  ),
+                  SizedBox(height: 25.0),
+                 Container(
+                   width: 350,
+                   child:
+                   ElevatedButton(
+                     onPressed: _submit,
+                     child: Text('Login',style: TextStyle(
+                         fontFamily: "Poppins"
+                     ),
+                     ),
+                     style: ElevatedButton.styleFrom(
+                         backgroundColor: Color(0xFF865DFF) // Set button background color
+                     ),
+                   ),
+                 ),
+                  CheckboxListTile(
+                    title: Text(
+                      "Remember me",
+                      style: TextStyle(color: Colors.white,
+                          fontFamily: "Poppins"), // Set checkbox text color
+                    ),
+                    value: _rememberMe,
+                    onChanged: (newValue) {
                       setState(() {
-                        _obscureText = !_obscureText;
+                        _rememberMe = newValue!;
                       });
                     },
+                    controlAffinity: ListTileControlAffinity.leading,
+                    tileColor: Colors.white,
+                    activeColor: Colors.green, // Set checkbox fill color when checked
+                    checkColor: Colors.white, // Set checkbox border color
                   ),
-                ),
-                validator: (value) => value!.isEmpty ? 'Please enter a password' : null,
-                onSaved: (value) => _inputPassword = value!,
-                obscureText: _obscureText,
-              ),
-              SizedBox(height: 25.0),
-              ElevatedButton(
-                onPressed: _submit,
-                child: Text('Login'),
-              ),
-              // SizedBox(height: 4.0),
-              CheckboxListTile(
-                title: Text("Remember me"),
-                value: _rememberMe,
-                onChanged: (newValue) {
-                  setState(() {
-                    _rememberMe = newValue!;
-                  });
-                },
-              ),
 
-              // SizedBox(height: 5.0),
-              Center(child: Text("Don't have an account?")),
-              SizedBox(height: 8.0),
-              ElevatedButton(
-                onPressed: _register,
-                child: Text('Create Account'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 146, 204, 0),
-                ),
+
+                  Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account?", style: TextStyle(color: Colors.white,
+                              fontFamily: "Poppins")
+                          ),
+                          InkWell(
+                            onTap: _register,
+                            child:
+                            Text("Sign in",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Poppins"
+                            ),)
+                          )
+                        ],
+                      )
+                  ), // Set text color
+                  SizedBox(height: 8.0),
+
+
+
+                ],
+
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      )
 
-
-      ),
     );
   }
+
 
 }

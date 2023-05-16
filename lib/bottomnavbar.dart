@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rillanime/favorite.dart';
+import 'package:rillanime/profile.dart';
 import 'dahsboard.dart';
 import 'discover.dart';
 
@@ -36,10 +37,12 @@ class _BotNavBarState extends State<BotNavBar> {
   }
 
   Widget build(BuildContext context) {
+
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
-      favorites(),
       discover(),
+      profile()
+
     ];
 
     return Scaffold(
@@ -48,89 +51,37 @@ class _BotNavBarState extends State<BotNavBar> {
         onPageChanged: _onItemTapped,
         children: _widgetOptions,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFF191825),
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF57b5cb),
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.movie, size: 30),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite, size: 30),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, size: 30),
-            label: 'Discover',
-          ),
-        ],
+      bottomNavigationBar: PreferredSize(
+        preferredSize: Size.fromHeight(56), // Sesuaikan dengan tinggi yang diinginkan
+        child: BottomNavigationBar(
+          backgroundColor: Color(0xFF191825),
+           // Tambahkan properti elevation dengan nilai 0
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color(0xFF865DFF),
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie, size: 30),
+              label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, size: 30),
+              label: 'Discover',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 30),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
+
+
     );
   }
 }
 
 
-// class BotNavBar extends StatefulWidget {
-//   const BotNavBar({Key? key}) : super(key: key);
-//
-//   @override
-//   State<BotNavBar> createState() => _BotNavBarState();
-// }
-//
-// class _BotNavBarState extends State<BotNavBar> {
-//   int _selectedIndex = 0;
-//   bool _isLoading = false;
-//
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _isLoading = true; // set isLoading true ketika memulai animasi loading
-//       _selectedIndex = index;
-//     });
-//     // simulasi delay selama 1 detik untuk menampilkan animasi loading
-//     Future.delayed(Duration(seconds: 1), () {
-//       setState(() {
-//         _isLoading = false; // set isLoading false setelah selesai animasi loading
-//       });
-//     });
-//   }
-//
-//   Widget build(BuildContext context) {
-//     List<Widget> _widgetOptions = <Widget>[
-//       Dashboard(),
-//       discover(),
-//     ];
-//
-//     return Scaffold(
-//       body: AnimatedSwitcher(
-//         duration: const Duration(milliseconds: 500), // durasi animasi
-//         child: _isLoading
-//             ? Center(
-//           child: CircularProgressIndicator(), // widget animasi loading
-//         )
-//             : IndexedStack(
-//           index: _selectedIndex,
-//           children: _widgetOptions,
-//         ),
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         currentIndex: _selectedIndex,
-//         onTap: _onItemTapped,
-//         items: const [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.dashboard),
-//             label: 'Dashboard',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.help_outline),
-//             label: 'Discover',
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+
 
