@@ -5,6 +5,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/favorite.dart';
+import 'package:rillanime/konversiuang.dart';
+import 'package:rillanime/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'fetch.dart';
@@ -88,9 +90,10 @@ class _profileState extends State<profile> {
                 ),
               ),
               Positioned(
-                top: 30,
-                right: 0,
-                child: IconButton(
+                top: 10,
+                right: 5,
+                child:
+                IconButton(
                   icon: Icon(
                     Icons.logout,
                     color: Colors.white,
@@ -106,6 +109,20 @@ class _profileState extends State<profile> {
                     );
                   },
                 ),
+                // IconButton(
+                //   icon: Icon(
+                //     Icons.settings,
+                //     color: Colors.white,
+                //     size: 30,
+                //   ),
+                //   onPressed: () {
+                //
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => setting() ),
+                //     );
+                //   },
+                // ),
               ),
               Positioned(
                 top: 200,

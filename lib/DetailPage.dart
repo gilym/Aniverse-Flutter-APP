@@ -83,7 +83,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
       WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
     });
 
-
+print(widget.ranking );
+print("Kontol");
 
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
@@ -343,7 +344,7 @@ print(username);
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                icon("#"+widget.ranking.toString(), "Ranking", Icons.bar_chart_outlined),
+                icon( widget.ranking!= null ? "#"+widget.ranking.toString() : "N/A", "Ranking", Icons.bar_chart_outlined),
                 icon(widget.favorite.toString(), "Favorites", Icons.thumb_up_sharp),
                 icon(widget.member.toString(), "Members", Icons.people_alt),
                 icon("#"+widget.popularity.toString(), "Popularity", Icons.auto_graph),
