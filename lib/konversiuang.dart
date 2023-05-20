@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flag/flag.dart';
 
+import 'main.dart';
+
 
 class CurrencyConverter extends StatefulWidget {
   @override
@@ -82,10 +84,10 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor:Background,
       appBar: AppBar(
           title: Text('Currency Converter'),
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         elevation: 0
       ),
       body:Column(
@@ -95,6 +97,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+
                 width: 280,
                 child:TextFormField(
                   controller: _fromController,
@@ -105,17 +108,21 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                     _fromCurrency=="JPY" ? Text("JPY ")  :
                     _fromCurrency=="EUR" ? Text("EUR ")  :Text(" "),
                     labelText: 'From',
-                    labelStyle: TextStyle(fontFamily: "Poppins"),
                     hintStyle: TextStyle(color: Colors.white, fontFamily: "Poppins"),
-
                     focusColor: Colors.white,
-                    hintText: '',
-
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1),
+                    fillColor: Background,
                     border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10.0), // Set border radius
+                    ),
+                    labelStyle: TextStyle(color: Colors.white,fontFamily: "Poppins"), // Set label text color
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                      borderRadius: BorderRadius.circular(15.0), // Set border radius
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white), // Set focused border color
+                      borderRadius: BorderRadius.circular(20.0), // Set border radius
                     ),
                   ),
                   style: TextStyle(color: Colors.white),
@@ -233,7 +240,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
             child: InkWell(
               onTap: (){
                 setState(() {
-print(_fromController.toString());
+
                   TextEditingController tempcontroler = _fromController;
                   String tempCurrency= _fromCurrency;
 
@@ -255,9 +262,16 @@ print(_fromController.toString());
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), // Menambahkan radius border sebesar 10
+                  border: Border.all(
+                    color: Colors.white, // Mengatur warna border putih
+                  ),
+                ),
+
                 width: 280,
-                child: TextField(
-enabled: false,
+                child: TextFormField(
+                  enabled: false,
                   keyboardType: TextInputType.number,
                   controller: _toController,
                   decoration: InputDecoration(
@@ -268,15 +282,23 @@ enabled: false,
 
                     labelText: 'To',
                     hintText: 'Enter amount',
-                    labelStyle: TextStyle(fontFamily: "Poppins"),
+
+                    labelStyle: TextStyle(color: Colors.white,fontFamily: "Poppins"), // Set label text color
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                      borderRadius: BorderRadius.circular(15.0), // Set border radius
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white), // Set focused border color
+                      borderRadius: BorderRadius.circular(20.0), // Set border radius
+                    ),
                     hintStyle: TextStyle(color: Colors.white,
                         fontFamily: "Poppins"),/// Ubah warna teks hint menjadi putih
                     // Ubah warna teks input yang sudah diisi menjadi putih
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1), // Atur warna latar belakang dengan transparansi
+                    fillColor: Background, // Atur warna latar belakang dengan transparansi
                     border: OutlineInputBorder(
-                      borderSide: BorderSide.none, // Hilangkan garis tepi
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10.0), // Set border radius
                     ),
                   ),
                   style: TextStyle(color: Colors.white), // Ubah warna teks input menjadi putih

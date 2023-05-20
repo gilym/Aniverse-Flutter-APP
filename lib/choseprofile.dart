@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rillanime/register.dart';
 
+import 'main.dart';
+
 class choseprofile extends StatelessWidget {
   const choseprofile({Key? key}) : super(key: key);
 
@@ -8,9 +10,9 @@ class choseprofile extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> image=["assets/tanjiro.png","assets/deku.jpg","assets/gojo.jpg","assets/luffy.jpg","assets/naruto.png",];
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor: Background,
       appBar: AppBar(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         elevation: 0,
       ),
       body: Column(

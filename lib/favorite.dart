@@ -57,9 +57,9 @@ class _favoritesState extends State<favorites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor:Background,
       appBar: AppBar(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         title: Text('Favorite List'),
         elevation: 0,
       ),

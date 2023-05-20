@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'konversiuang.dart';
 import 'main.dart';
 import 'model/user.dart';
 
@@ -57,7 +58,7 @@ class _settingState extends State<setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor: Background,
       appBar: AppBar(
         title: Text("Setting"),
         elevation: 0,
@@ -118,8 +119,6 @@ class _settingState extends State<setting> {
               ],
             ),
           ),
-
-
           Container(
             height: 190,
 
@@ -189,6 +188,18 @@ class _settingState extends State<setting> {
                 // tambahkan child lainnya di sini jika diperlukan
               ],
             ),
+          ),
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>CurrencyConverter()),
+              );
+            },
+            child:
+            Icon(Icons.add,
+            color: Colors.white,
+            size: 30,),
           )
 
         ],

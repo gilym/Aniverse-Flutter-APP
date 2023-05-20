@@ -32,6 +32,9 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   hive: ^2.2.3
   flag: ^6.0.0
+  flutter_native_timezone: ^2.0.0
+  timer_builder: ^2.0.0
+  table_calendar: ^3.0.2
 
   shared_preferences: ^2.1.1
   build_runner: ^2.1.4
@@ -75,6 +78,12 @@ flutter:
     - family: Raleway
       fonts:
         - asset: assets/Raleway-Regular.ttf
+    - family: Oswald
+      fonts:
+        - asset: assets/Oswald-Regular.ttf
+    - family: Bangers
+      fonts:
+        - asset: assets/Bangers-Regular.ttf
 
 
   # The following line ensures that the Material Icons font is
@@ -92,6 +101,7 @@ flutter:
     - assets/foto2.jpeg
     - assets/foto3.jpg
     - assets/wave.png
+    - assets/splash.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

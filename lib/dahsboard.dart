@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:rillanime/schedule.dart';
+
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -64,9 +66,6 @@ late String username='';
         });
       }
     }
-
-
-
 
 loadUsername();
 
@@ -148,9 +147,9 @@ final user = _myBox.get(username);
     if (isLoading) {
       // Tampilkan tampilan loading saat data sedang dimuat
       return Scaffold(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         appBar: AppBar(
-          backgroundColor: Color(0xFF191825),
+          backgroundColor:Background,
           elevation: 0,
           title: Row(
             children: [
@@ -172,6 +171,23 @@ final user = _myBox.get(username);
               ),
             ],
           ),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.calendar_month,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => schedule() ),
+                );
+              },
+            ),
+            SizedBox(width: 10,)
+          ],
 
         ),
 
@@ -189,9 +205,9 @@ final user = _myBox.get(username);
       // Tampilkan tampilan yang diinginkan ketika data berhasil dimuat
       return Scaffold(
 
-          backgroundColor: Color(0xFF191825),
+          backgroundColor: Background,
           appBar: AppBar(
-            backgroundColor: Color(0xFF191825),
+            backgroundColor:Background,
             elevation: 0,
             title: Row(
               children: [
@@ -213,6 +229,24 @@ final user = _myBox.get(username);
                 ),
               ],
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.calendar_month,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () {
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => schedule() ),
+                  );
+                },
+              ),
+              SizedBox(width: 10,)
+            ],
+
 
           )
           ,
@@ -706,9 +740,10 @@ decoration: BoxDecoration(
               child: Container(
                 height: 120,
                 decoration: BoxDecoration(
-                     color: Colors.black,
-                    borderRadius: BorderRadius.circular(10)
+                  color: Colors.black.withOpacity(0.75), // Menetapkan transparansi sebesar 50%
+                  borderRadius: BorderRadius.circular(10),
                 ),
+
 
               ),
             ),

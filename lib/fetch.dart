@@ -47,6 +47,7 @@ class getTop {
   }
 }
 
+
 class getGenre {
   static Future<List<dynamic>> fetchGenre() async {
     List<dynamic> animeData = [];

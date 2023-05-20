@@ -3,6 +3,7 @@ import 'package:rillanime/favorite.dart';
 import 'package:rillanime/profile.dart';
 import 'dahsboard.dart';
 import 'discover.dart';
+import 'main.dart';
 
 
 class BotNavBar extends StatefulWidget {
@@ -54,7 +55,7 @@ class _BotNavBarState extends State<BotNavBar> {
       bottomNavigationBar: PreferredSize(
         preferredSize: Size.fromHeight(56), // Sesuaikan dengan tinggi yang diinginkan
         child: BottomNavigationBar(
-          backgroundColor: Color(0xFF191825),
+          backgroundColor: Background,
            // Tambahkan properti elevation dengan nilai 0
           currentIndex: _selectedIndex,
           selectedItemColor: Color(0xFF865DFF),

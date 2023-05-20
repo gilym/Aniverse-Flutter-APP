@@ -2,7 +2,7 @@
     package="com.example.rillanime">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="rillanime"
+        android:label="AniVerse"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

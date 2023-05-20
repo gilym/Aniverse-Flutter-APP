@@ -67,7 +67,7 @@ class _profileState extends State<profile> {
     final user = _myBox.get(username);
 
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor:Background,
       body: ListView(
         children: [
           Stack(
@@ -93,36 +93,36 @@ class _profileState extends State<profile> {
                 top: 10,
                 right: 5,
                 child:
-                IconButton(
-                  icon: Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    _myBox.close();
-                    _prefs.setBool('isLoggedIn', false);
-                    _prefs.remove('username');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
-                    );
-                  },
-                ),
                 // IconButton(
                 //   icon: Icon(
-                //     Icons.settings,
+                //     Icons.logout,
                 //     color: Colors.white,
                 //     size: 30,
                 //   ),
                 //   onPressed: () {
-                //
-                //     Navigator.push(
+                //     _myBox.close();
+                //     _prefs.setBool('isLoggedIn', false);
+                //     _prefs.remove('username');
+                //     Navigator.pushReplacement(
                 //       context,
-                //       MaterialPageRoute(builder: (context) => setting() ),
+                //       MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
                 //     );
                 //   },
                 // ),
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => setting() ),
+                    );
+                  },
+                ),
               ),
               Positioned(
                 top: 200,

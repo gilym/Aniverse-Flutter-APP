@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
 
+import 'main.dart';
+
 
 
 class viewbygenre extends StatefulWidget {
@@ -23,9 +25,9 @@ class _viewbygenreState extends State<viewbygenre> {
 
 
     return Scaffold(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
       appBar: AppBar(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor:Background,
         elevation: 0,
         iconTheme: IconThemeData(
           color: Colors.white, // Ubah warna icon menjadi hitam

@@ -14,27 +14,27 @@ class AnimeDetailScreen extends StatefulWidget {
 
   const AnimeDetailScreen({
     Key? key,
-     this.title,
-     this.imageUrl,
-     this.url,
-     this.synopsis,
+    this.title,
+    this.imageUrl,
+    this.url,
+    this.synopsis,
     required this.id,
-     this.score,
+    this.score,
     this.trailer,
-     this.genres,
-     this.episodes,
-     this.duration,
-     this.ranking,
-     this.favorite,
-     this.member,
-     this.popularity,
-     this.status,
-     this.season,
-     this.studio,
-     this.source,
-     this.rating,
-     this.idyoutube,
-     this.type
+    this.genres,
+    this.episodes,
+    this.duration,
+    this.ranking,
+    this.favorite,
+    this.member,
+    this.popularity,
+    this.status,
+    this.season,
+    this.studio,
+    this.source,
+    this.rating,
+    this.idyoutube,
+    this.type
 
 
   }) : super(key: key);
@@ -83,8 +83,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
       WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
     });
 
-print(widget.ranking );
-print("Kontol");
+    print(widget.ranking );
+    print("Kontol");
 
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
@@ -106,7 +106,7 @@ print("Kontol");
   void _openBox() async {
     await Hive.openBox<UserModel>(boxName);
     _myBox = Hive.box<UserModel>(boxName);
-print(username);
+    print(username);
     final userModel = _myBox.get(username);
     if (userModel != null && userModel.favorites != null) {
       setState(() {
@@ -144,45 +144,15 @@ print(username);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF191825),
-      appBar:AppBar(
-        backgroundColor: Color(0xFF191825),
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.white, // Ubah warna icon menjadi hitam
-        ),
-        actions: [
-          InkWell(
-            child: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border,
-            size: 30,),
-            onTap: () {
-              setState(() {
-                _isFavorite = !_isFavorite;
-              });
-              _updateFavoriteStatus();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(_isFavorite ? 'Ditambahkan ke Favorit' : 'Dihapus dari Favorit'),
-                duration: Duration(seconds: 2),
-              ));
-
-            },
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20),
-
-          )
-
-        ],
-
-      ),
+      backgroundColor: Background,
 
       body: ListView(
-        shrinkWrap: true,
+        padding: EdgeInsets.zero,
         children: [
           Stack(
             children: [
               Container(
-                height: 310,
+                height: 400,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(widget.imageUrl!),
@@ -190,13 +160,45 @@ print(username);
                   ),
                 ),
 
-                  child: Container(
-                    color: Colors.black.withOpacity(0.8),
-                  ),
+                child: Container(
+                  color: Colors.black.withOpacity(0.8),
+                ),
 
               ),
+              Positioned(
+                  top: 50,
+                  left: 15,
+                  child:InkWell(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child:  Icon(Icons.arrow_back_outlined,
+                      size: 35,
+                      color: Colors.white,),
+                  )
+              ),
+              Positioned(
+                top: 50,
+                right: 15,
+                child:   InkWell(
+                  child: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border,
+                    size: 35,
+                    color: Colors.white,),
+                  onTap: () {
+                    setState(() {
+                      _isFavorite = !_isFavorite;
+                    });
+                    _updateFavoriteStatus();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(_isFavorite ? 'Ditambahkan ke Favorit' : 'Dihapus dari Favorit'),
+                      duration: Duration(seconds: 2),
+                    ));
+
+                  },
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(top: 110,left: 16,right: 16),
                 child: Container(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +255,7 @@ print(username);
                 ),
               ),
               Positioned(
-                bottom: 50,
+                bottom: 20,
                 right: 20,
                 child: Stack(
                   alignment: Alignment.center,
@@ -283,7 +285,7 @@ print(username);
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 290),
+                margin: EdgeInsets.only(top: 380),
                 child: Divider(
                   indent: 20,
                   endIndent: 20,
@@ -292,47 +294,47 @@ print(username);
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 245),
-                child:Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child:ElevatedButton(
-                            onPressed: widget.trailer != null ? () {
-                              _launchUrl(widget.trailer!);
-                            } : null, // Disable button if trailer == null
-                            style: ButtonStyle(
-                              backgroundColor: widget.trailer != null
-                                  ? MaterialStateProperty.all<Color>(Colors.red)
-                                  : MaterialStateProperty.all<Color>(Colors.grey), // Disable button color if trailer == null
+                  margin: EdgeInsets.only(top: 335),
+                  child:Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.play_circle, color: Colors.white),
-                                SizedBox(width: 8),
-                                Text(
-                                  widget.trailer != null ? "Trailer" : "Unknown",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                            child:ElevatedButton(
+                              onPressed: widget.trailer != null ? () {
+                                _launchUrl(widget.trailer!);
+                              } : null, // Disable button if trailer == null
+                              style: ButtonStyle(
+                                backgroundColor: widget.trailer != null
+                                    ? MaterialStateProperty.all<Color>(Colors.red)
+                                    : MaterialStateProperty.all<Color>(Colors.grey), // Disable button color if trailer == null
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.play_circle, color: Colors.white),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    widget.trailer != null ? "Trailer" : "Unknown",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
                             ),
+
+
+
                           ),
 
-
-
-                        ),
-
-                      ],
-                    ),
-                  ],
-                )
+                        ],
+                      ),
+                    ],
+                  )
               ),
               SizedBox(height: 20),
             ],
@@ -366,13 +368,13 @@ print(username);
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Synopsis",
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white
+                  style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white
 
-                ),textAlign: TextAlign.left,
+                  ),textAlign: TextAlign.left,
 
 
                 ),
@@ -422,24 +424,24 @@ print(username);
                     itemBuilder: (context, index) {
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child:  Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child:  Container(
 
-                      child: Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: Chip(
-                      label: Text(widget.genres![index]),
-                      backgroundColor: Color(0xFF4F576F),
-                      labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      fontFamily: "Raleway",
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Chip(
+                                label: Text(widget.genres![index]),
+                                backgroundColor: Color(0xFF4F576F),
+                                labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  fontFamily: "Raleway",
 
-                      ),
-                      ),
-                      ),
-                      )
+                                ),
+                              ),
+                            ),
+                          )
                       );
                     },
                   ),
@@ -539,28 +541,28 @@ print(username);
     }
   }
 
-Widget info (String title , String data){
+  Widget info (String title , String data){
 
     return Padding(padding:  const EdgeInsets.only(left: 2,right: 7,bottom: 4,top: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,
-          style: TextStyle(
-            fontFamily: "Poppins",
-              color: Colors.white
-          ),),
+            style: TextStyle(
+                fontFamily: "Poppins",
+                color: Colors.white
+            ),),
           Text(data ,
-          style: TextStyle(
-            fontFamily: "Poppins",
-              color: Colors.white
+            style: TextStyle(
+                fontFamily: "Poppins",
+                color: Colors.white
 
-          ),),
+            ),),
 
 
         ],
       ),);
-}
+  }
 
   Widget icon (String data, String judul , IconData icon){
 
@@ -568,7 +570,7 @@ Widget info (String title , String data){
       children: [
         Icon(icon,
           size: 35,
-        color: Colors.white,),
+          color: Colors.white,),
         Text(data,
           style: TextStyle(
               fontSize: 18,
@@ -579,9 +581,9 @@ Widget info (String title , String data){
 
         Text(judul,
           style: TextStyle(
-              fontSize: 15,
-              color: Colors.white54,
-              fontFamily: "Poppins",
+            fontSize: 15,
+            color: Colors.white54,
+            fontFamily: "Poppins",
 
 
           ),)
@@ -589,4 +591,3 @@ Widget info (String title , String data){
     );
   }
 }
-

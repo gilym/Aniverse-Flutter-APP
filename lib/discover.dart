@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'fetch.dart';
+import 'main.dart';
 
 
 class discover extends StatefulWidget {
@@ -30,7 +31,7 @@ late bool isLoading;
     }
     else {
 
-      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)  ).toList();
+      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)  || anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -44,7 +45,7 @@ late bool isLoading;
     else {
         var anime = topanime;
         anime.sort((a, b) => (b['score'] ?? 0).compareTo(a['score'] ?? 0));
-      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search) || anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -56,7 +57,7 @@ late bool isLoading;
     }
     else {
         var anime = topanime.where((anime) => anime['type'] == "TV").toList();
-      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)|| anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -68,7 +69,7 @@ late bool isLoading;
     }
     else {
         var anime = topanime.where((anime) => anime['type'] == "Movie").toList();
-      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)|| anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -80,7 +81,7 @@ late bool isLoading;
     }
     else {
         var anime = topanime.where((anime) => anime['type'] == "OVA").toList();
-      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)|| anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -94,7 +95,7 @@ late bool isLoading;
     else {
         var anime = topanime;
         anime.sort((a, b) => (a['popularity'] ?? 0).compareTo(b['popularity'] ?? 0));
-      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)).toList();
+      var filteredAnime = anime.where((anime) => anime['title'].toString().toLowerCase().contains(search)|| anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -128,9 +129,9 @@ late bool isLoading;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor: Background,
       appBar: AppBar(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         elevation: 0,
         title: Container(
           decoration: BoxDecoration(

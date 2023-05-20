@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dahsboard.dart';
 import 'discover.dart';
 import 'fetch.dart';
+import 'main.dart';
 
 
 class viewmore extends StatefulWidget {
@@ -43,9 +44,9 @@ class _viewmoreState extends State<viewmore> {
 
 
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor: Background,
       appBar: AppBar(
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         elevation: 0,
         iconTheme: IconThemeData(
           color: Colors.white, // Ubah warna icon menjadi hitam

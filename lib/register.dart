@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:rillanime/login.dart';
 import '../model/user.dart';
 import '../main.dart';
+import 'func/encrypt.dart';
 
 class RegisterPage extends StatefulWidget {
   final String image;
@@ -45,26 +46,27 @@ class _RegisterPageState extends State<RegisterPage> {
         return;
       }
 
-      final user = UserModel(password: _inputPassword,Name: _inputYourname ,image: widget.image);
-
+      final encryptedPassword = EncryptData.encryptAES(_inputPassword);
+      final user = UserModel(password: encryptedPassword, Name: _inputYourname, image: widget.image);
+print(encryptedPassword);
       _myBox.put(_inputUsername, user);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User registered successfully.')),
       );
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191825),
+      backgroundColor:Background,
       appBar: AppBar(
 
 
-        backgroundColor: Color(0xFF191825),
+        backgroundColor: Background,
         elevation: 0,
       ),
       body: Form(

@@ -5,6 +5,7 @@ import 'package:rillanime/choseprofile.dart';
 import '../main.dart';
 
 import '../model/user.dart';
+import 'func/encrypt.dart';
 import 'register.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,11 +64,12 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       final user = _myBox.get(_inputUsername);
-      if (_inputPassword == user!.password) {
+      final encryptedPassword = EncryptData.decryptAES(user!.password);
+      if (_inputPassword == encryptedPassword) {
         // Save user's session
         Nameuser=_inputUsername;
 
-        print(user.image );
+        print(encryptedPassword);
 
         if(_rememberMe){
           _prefs.setBool('isLoggedIn', true);
@@ -104,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFF191825),
+      backgroundColor: Background,
       // appBar: AppBar(
       //   // backgroundColor: Color(0xFF191825),
       //   backgroundColor: Color(0xFF865DFF),
@@ -142,18 +144,24 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),),
-                color: Color(0xFF191825),
+                color: Background,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Container(
+                    height: 100,
+                    width: 100,
+                    child: Image.asset("assets/splash.png"),
+                  ),
                   Text("Login",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 35,
                     fontFamily: "Poppins"
                   ),),
-                  SizedBox(height: 60,),
+
+                  SizedBox(height: 30,),
                   TextFormField(
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person,
