@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Background,
+      backgroundColor:   Color(0xFF131313),
       // appBar: AppBar(
       //   // backgroundColor: Color(0xFF191825),
       //   backgroundColor: Color(0xFF865DFF),
@@ -156,69 +156,77 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text("Login",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: fontcollor,
                     fontSize: 35,
                     fontFamily: "Poppins"
                   ),),
 
                   SizedBox(height: 30,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person,
-                        color: Colors.grey,),
-                      labelText: 'Username',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Set border radius
-                      ),
-                      labelStyle: TextStyle(color: Colors.white), // Set label text color
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
-                        borderRadius: BorderRadius.circular(30.0), // Set border radius
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white), // Set focused border color
-                        borderRadius: BorderRadius.circular(20.0), // Set border radius
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
-                    onSaved: (value) => _inputUsername = value!.toLowerCase(),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock,
-                        color: Colors.grey,),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureText ? Icons.visibility : Icons.visibility_off,
-                          color: Colors.grey,
+                  Container(
+                    width: 385,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person,
+                              color: Colors.grey,),
+                            labelText: 'Username',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0), // Set border radius
+                            ),
+                            labelStyle: TextStyle(color: fontcollor), // Set label text color
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                              borderRadius: BorderRadius.circular(30.0), // Set border radius
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Darkmode? Colors.white :Colors.deepOrange), // Set focused border color
+                              borderRadius: BorderRadius.circular(20.0), // Set border radius
+                            ),
+                          ),
+                          style: TextStyle(color: fontcollor),
+                          validator: (value) => value!.isEmpty ? 'Please enter a username ' : null,
+                          onSaved: (value) => _inputUsername = value!.toLowerCase(),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ),
+                        SizedBox(height: 20.0),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.lock,
+                              color: Colors.grey,),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                            ),
 
-                      labelStyle: TextStyle(color: Colors.white), // Set label text color
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
-                        borderRadius: BorderRadius.circular(30.0), // Set border radius
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white), // Set focused border color
-                        borderRadius: BorderRadius.circular(20.0), // Set border radius
-                      ),
+                            labelStyle: TextStyle(color: fontcollor), // Set label text color
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
+                              borderRadius: BorderRadius.circular(30.0), // Set border radius
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Darkmode? Colors.white :Colors.deepOrange), // Set focused border color
+                              borderRadius: BorderRadius.circular(20.0), // Set border radius
+                            ),
+                          ),
+                          style: TextStyle(color: fontcollor),
+                          validator: (value) =>
+                          value!.isEmpty ? 'Please enter a password' : null,
+                          onSaved: (value) => _inputPassword = value!,
+                          obscureText: _obscureText,
+                        ),
+                      ],
                     ),
-                    style: TextStyle(color: Colors.white),
-                    validator: (value) =>
-                    value!.isEmpty ? 'Please enter a password' : null,
-                    onSaved: (value) => _inputPassword = value!,
-                    obscureText: _obscureText,
                   ),
+
                   SizedBox(height: 25.0),
                  Container(
                    width: 350,
@@ -230,14 +238,14 @@ class _LoginPageState extends State<LoginPage> {
                      ),
                      ),
                      style: ElevatedButton.styleFrom(
-                         backgroundColor: Color(0xFF865DFF) // Set button background color
+                         backgroundColor:Darkmode? Color(0xFF865DFF) :Colors.deepOrange// Set button background color
                      ),
                    ),
                  ),
                   CheckboxListTile(
                     title: Text(
                       "Remember me",
-                      style: TextStyle(color: Colors.white,
+                      style: TextStyle(color: fontcollor,
                           fontFamily: "Poppins"), // Set checkbox text color
                     ),
                     value: _rememberMe,
@@ -257,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't have an account?", style: TextStyle(color: Colors.white,
+                          Text("Don't have an account?", style: TextStyle(color:fontcollor,
                               fontFamily: "Poppins")
                           ),
                           InkWell(
@@ -265,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                             child:
                             Text("Sign in",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: fontcollor,
                               fontWeight: FontWeight.bold,
                               fontFamily: "Poppins"
                             ),)

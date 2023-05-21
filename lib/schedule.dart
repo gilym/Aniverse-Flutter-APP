@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/bottomnavbar.dart';
 import 'package:rillanime/count.dart';
-import 'package:rillanime/kalender.dart';
+
 import 'package:rillanime/viewmore.dart';
 import 'fetchschedule.dart';
 
-import 'dahsboard.dart';
+import 'dashboard.dart';
 import 'main.dart';
 
 class schedule extends StatefulWidget {
@@ -144,16 +144,10 @@ class _scheduleState extends State<schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-      appBar: (
-      AppBar(
-        backgroundColor: Background,
-        elevation: 0,
-        title: Text("Schedule"),
 
-      )
-      ),
 
       body: ListView(
+        padding: EdgeInsets.only(top: 50),
         children: [
          tile("Sunday", sunday),
           SizedBox(height: 20,),
@@ -310,13 +304,13 @@ class _scheduleState extends State<schedule> {
               child: Text(title ,
                 style: TextStyle(
                     fontFamily: "Raleway",
-                    color: Colors.white,
+                    color: fontcollor,
                     fontWeight: FontWeight.w400,
                     fontSize: 25
                 ),),
             ),
             Icon(Icons.chevron_right,
-              color: Colors.white,
+              color: fontcollor,
               size: 35,)
           ],
         )
@@ -431,7 +425,7 @@ class _scheduleState extends State<schedule> {
                   Container(
 
                     child: Text(
-                      (title!.length <= 40) ? title! : title!.substring(0, 40),
+                      (title!.length <= 40) ? title!.toUpperCase() : title!.substring(0, 40).toUpperCase(),
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,

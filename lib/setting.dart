@@ -19,6 +19,7 @@ class _settingState extends State<setting> {
   late SharedPreferences _prefs;
   late String username = '';
   late Future<List<dynamic>> favData = Future.value([]);
+  final String pesan ="Selama mengikuti kelas Teknologi Pemrograman Mobile, saya merasa sangat terinspirasi dan senang. Materi yang diajarkan sangat relevan dengan perkembangan teknologi terkini. Saya mendapatkan pemahaman yang mendalam tentang pembuatan aplikasi mobile menggunakan Flutter. Instruktur sangat kompeten dan responsif dalam menjawab pertanyaan kami. Saya juga mengapresiasi suasana belajar yang interaktif dan kolaboratif di kelas. Terima kasih atas pengalaman yang berharga ini!";
 
 
   void initState() {
@@ -60,28 +61,10 @@ class _settingState extends State<setting> {
     return Scaffold(
       backgroundColor: Background,
       appBar: AppBar(
-        title: Text("Setting"),
+
         elevation: 0,
         backgroundColor: Color(0xFF865DFF),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () {
-              _myBox.close();
-              _prefs.setBool('isLoggedIn', false);
-              _prefs.remove('username');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
-              );
-            },
-          ),
 
-        ],
       ),
       body: ListView(
         children: [
@@ -189,18 +172,32 @@ class _settingState extends State<setting> {
               ],
             ),
           ),
-          InkWell(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>CurrencyConverter()),
-              );
-            },
-            child:
-            Icon(Icons.add,
-            color: Colors.white,
-            size: 30,),
+          Card(
+            color: Background,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.message,color: fontcollor,),
+                  title: Text("Kesan Pesan" ,style: TextStyle(color: fontcollor ,fontFamily: "Poppins",fontSize: 21,fontWeight: FontWeight.bold),),
+                  subtitle: Text(pesan,style: TextStyle(color: fontcollor ,fontFamily: "Poppins"),),
+                ),
+
+              ],
+            ),
           )
+
+          // InkWell(
+          //   onTap: (){
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) =>CurrencyConverter()),
+          //     );
+          //   },
+          //   child:
+          //   Icon(Icons.add,
+          //   color: Colors.white,
+          //   size: 30,),
+          // )
 
         ],
       ),

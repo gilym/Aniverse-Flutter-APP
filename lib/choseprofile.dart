@@ -12,6 +12,10 @@ class choseprofile extends StatelessWidget {
     return Scaffold(
       backgroundColor: Background,
       appBar: AppBar(
+
+        iconTheme: IconThemeData(
+          color:fontcollor, // Atur warna ikon kembali (back) di sini
+        ),
         backgroundColor: Background,
         elevation: 0,
       ),
@@ -24,7 +28,7 @@ class choseprofile extends StatelessWidget {
               style: TextStyle(
                 fontFamily: "Raleway",
                 fontSize: 40,
-                color: Colors.white,
+                color: fontcollor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -36,7 +40,7 @@ class choseprofile extends StatelessWidget {
               style: TextStyle(
                 fontFamily: "Raleway",
                 fontSize: 30,
-                color: Colors.white,
+                color:fontcollor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -58,9 +62,24 @@ class choseprofile extends StatelessWidget {
                           ),
                         );
                       },
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(image[i]),
+                      child:Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 3), // Atur offset bayangan jika diperlukan
+                            ),
+                          ],
+                        ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage(image[i]),
+                        ),
                       ),
                     ),
                   ),

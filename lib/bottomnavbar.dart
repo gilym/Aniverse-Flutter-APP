@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rillanime/favorite.dart';
 import 'package:rillanime/profile.dart';
-import 'dahsboard.dart';
+import 'package:rillanime/schedule.dart';
+import 'package:rillanime/setting.dart';
+import 'dashboard.dart';
 import 'discover.dart';
 import 'main.dart';
 
@@ -42,7 +43,9 @@ class _BotNavBarState extends State<BotNavBar> {
     List<Widget> _widgetOptions = <Widget>[
       Dashboard(),
       discover(),
-      profile()
+      schedule(),
+      profile(),
+      setting()
 
     ];
 
@@ -52,13 +55,18 @@ class _BotNavBarState extends State<BotNavBar> {
         onPageChanged: _onItemTapped,
         children: _widgetOptions,
       ),
-      bottomNavigationBar: PreferredSize(
-        preferredSize: Size.fromHeight(56), // Sesuaikan dengan tinggi yang diinginkan
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Background
+        ),
+
+        height: 70,
+        // Atur tinggi yang diinginkan
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Background,
-           // Tambahkan properti elevation dengan nilai 0
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xFF865DFF),
+          selectedItemColor: Darkmode? Color(0xFFD0FE42) : Colors.deepOrange,
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
           items: const [
@@ -71,15 +79,22 @@ class _BotNavBarState extends State<BotNavBar> {
               label: 'Discover',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_month_sharp, size: 30),
+              label: 'Schedule',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 30),
               label: 'Profile',
+            ),BottomNavigationBarItem(
+              icon: Icon(Icons.settings, size: 30),
+              label: 'Setting',
             ),
           ],
         ),
       ),
-
-
     );
+
+
   }
 }
 

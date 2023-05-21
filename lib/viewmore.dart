@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/viewbygenre.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dahsboard.dart';
+import 'dashboard.dart';
 import 'discover.dart';
 import 'fetch.dart';
 import 'main.dart';
@@ -49,15 +49,16 @@ class _viewmoreState extends State<viewmore> {
         backgroundColor: Background,
         elevation: 0,
         iconTheme: IconThemeData(
-          color: Colors.white, // Ubah warna icon menjadi hitam
+          color: fontcollor, // Atur warna ikon kembali (back) di sini
         ),
+
         title: Text(
           widget.title,
           style: TextStyle(
-            color: Colors.white,
+            color:fontcollor,
             fontFamily: "Poppins",
 
-            fontSize: 20,
+            fontSize: 21,
           ),
         ),
 
@@ -65,7 +66,7 @@ class _viewmoreState extends State<viewmore> {
       body: ListView(
         children: [
           SizedBox(
-              height: 700,
+              height: 750,
               child: widget.title!="Genres" ?  GridView.count(
                 crossAxisCount: 3,
                 // Menentukan jumlah item per baris
@@ -122,7 +123,7 @@ class _viewmoreState extends State<viewmore> {
           padding: const EdgeInsets.all(01.0),
           child: Chip(
             label: Text(name),
-            backgroundColor:Color(0xFF4F576F),
+            backgroundColor: Darkmode? Color(0xFF4F576F) :Color(0xFF131313),
             labelStyle: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

@@ -11,7 +11,7 @@ import 'login.dart';
 
 String boxName = 'userBox';
 String Nameuser='';
-Color Background = Color(0xFF0B032D);
+Color Background = Color(0xFF03001C);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

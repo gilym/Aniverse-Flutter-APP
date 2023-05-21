@@ -59,8 +59,15 @@ class _favoritesState extends State<favorites> {
     return Scaffold(
       backgroundColor:Background,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: fontcollor, // Atur warna ikon kembali (back) di sini
+        ),
         backgroundColor: Background,
-        title: Text('Favorite List'),
+        title: Text('Favorite List',
+        style: TextStyle(
+          fontFamily: "Poppins",
+          color: fontcollor
+        ),),
         elevation: 0,
       ),
       body: FutureBuilder<List<dynamic>>(
@@ -81,7 +88,7 @@ class _favoritesState extends State<favorites> {
               return Center(
                 child: Text('Tidak ada favorit yang tersimpan.',
                 style: TextStyle(
-                    color: Colors.white,
+                    color: fontcollor,
                   fontSize: 17,
                   fontFamily: "Raleway"
                 ),
@@ -96,7 +103,7 @@ class _favoritesState extends State<favorites> {
                   return Center(
                     child: Text('Tidak ada favorit yang tersimpan.',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: fontcollor,
                           fontSize: 17,
                           fontFamily: "Raleway"
                       ),),
@@ -111,7 +118,7 @@ class _favoritesState extends State<favorites> {
                   return Center(
                     child: Text('Tidak ada favorit yang tersimpan.',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: fontcollor,
                             fontSize: 17,
                             fontFamily: "Raleway"
                         ),),

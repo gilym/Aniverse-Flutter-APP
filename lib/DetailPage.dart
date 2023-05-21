@@ -372,7 +372,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Colors.white
+                      color: fontcollor
 
                   ),textAlign: TextAlign.left,
 
@@ -381,7 +381,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 Text(widget.synopsis ?? "-",
                   style: TextStyle(
                     fontFamily: "Poppins",
-                    color: Colors.white,
+                    color: fontcollor,
                     fontSize: 15,
                   ),
 
@@ -408,7 +408,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color:fontcollor,
                     fontSize: 20,
 
                   ),textAlign: TextAlign.left,
@@ -431,7 +431,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                               padding: const EdgeInsets.all(1.0),
                               child: Chip(
                                 label: Text(widget.genres![index]),
-                                backgroundColor: Color(0xFF4F576F),
+                                backgroundColor: Darkmode? Color(0xFF4F576F) :Color(0xFF131313),
                                 labelStyle: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -451,7 +451,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: fontcollor,
                     fontSize: 20,
 
                   ),textAlign: TextAlign.left,
@@ -550,12 +550,12 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
           Text(title,
             style: TextStyle(
                 fontFamily: "Poppins",
-                color: Colors.white
+                color: fontcollor
             ),),
           Text(data ,
             style: TextStyle(
                 fontFamily: "Poppins",
-                color: Colors.white
+                color: fontcollor
 
             ),),
 
@@ -570,19 +570,19 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
       children: [
         Icon(icon,
           size: 35,
-          color: Colors.white,),
+          color: fontcollor,),
         Text(data,
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               fontFamily: "Poppins",
-              color: Colors.white
+              color: fontcollor
           ),),
 
         Text(judul,
           style: TextStyle(
             fontSize: 15,
-            color: Colors.white54,
+            color: Darkmode? Colors.white54 :Colors.black54,
             fontFamily: "Poppins",
 
 

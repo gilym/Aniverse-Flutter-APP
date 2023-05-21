@@ -153,6 +153,7 @@ late bool isLoading;
                     decoration: InputDecoration(
                       hintText: 'Search Anime'+topanime.length.toString(),
                       border: InputBorder.none,
+                      suffixIcon:Icon( Icons.search),
 
                     ),
                   ),
@@ -170,7 +171,7 @@ late bool isLoading;
              margin: EdgeInsets.only(right: 10),
              child:
              Icon(Icons.filter_list ,
-               color: Colors.white,
+               color:fontcollor,
                size: 35,),
            ),
          )
@@ -215,7 +216,7 @@ late bool isLoading;
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-            color:  Color(0xFF191825),
+            color: Background,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -230,7 +231,7 @@ late bool isLoading;
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: "Raleway",
-                        color: Colors.white,
+                        color: fontcollor,
                         fontSize: 20,
                       ),
                     ),
@@ -238,7 +239,7 @@ late bool isLoading;
 
                   IconButton(
                     icon: Icon(Icons.close,
-                        color: Colors.white),
+                        color: fontcollor),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -290,7 +291,7 @@ late bool isLoading;
               title,
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.white,
+                color: fontcollor,
               ),
             ),
             Spacer(),

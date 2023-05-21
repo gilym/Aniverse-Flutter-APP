@@ -109,20 +109,18 @@ class _profileState extends State<profile> {
                 //     );
                 //   },
                 // ),
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                    size: 30,
-                  ),
+                ElevatedButton.icon(
                   onPressed: () {
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => setting() ),
-                    );
                   },
-                ),
+                  icon: Icon(
+                    Icons.notifications,
+                    size: 24,
+                  ),
+                  label: Text(
+                    'Subscribe',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                )
               ),
               Positioned(
                 top: 200,
@@ -173,14 +171,14 @@ class _profileState extends State<profile> {
                   child: Text("Favorites Anime" ,
                     style: TextStyle(
                         fontFamily: "Raleway",
-                        color: Colors.white,
+                        color:fontcollor,
                         fontWeight: FontWeight.bold,
 
                         fontSize: 23
                     ),),
                 ),
                 Icon(Icons.chevron_right,
-                  color: Colors.white,
+                  color: fontcollor,
                   size: 35,)
               ],
             ),
@@ -202,9 +200,9 @@ class _profileState extends State<profile> {
 
                 if (fav.isEmpty) {
                   return Center(
-                    child: Text('Tidak ada favorit yang tersimpan1.',
+                    child: Text('Tidak ada favorit yang tersimpan.',
                       style: TextStyle(
-                          color: Colors.white,
+                          color:fontcollor,
                           fontSize: 17,
                           fontFamily: "Raleway"
                       ),
@@ -217,9 +215,9 @@ class _profileState extends State<profile> {
                   builder: (context, Box<UserModel> box, _) {
                     if (box.isEmpty) {
                       return Center(
-                        child: Text('Tidak ada favorit yang tersimpan2.',
+                        child: Text('Tidak ada favorit yang tersimpan.',
                           style: TextStyle(
-                              color: Colors.white,
+                              color:fontcollor,
                               fontSize: 17,
                               fontFamily: "Raleway"
                           ),),
@@ -232,9 +230,9 @@ class _profileState extends State<profile> {
                         user.favorites == null ||
                         user.favorites!.isEmpty) {
                       return Center(
-                        child: Text('Tidak ada favorit yang tersimpan3.',
+                        child: Text('Tidak ada favorit yang tersimpan.',
                           style: TextStyle(
-                              color: Colors.white,
+                              color:fontcollor,
                               fontSize: 17,
                               fontFamily: "Raleway"
                           ),),

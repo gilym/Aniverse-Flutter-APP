@@ -33,6 +33,8 @@ late String username='';
 
 
 
+
+
   @override
   void initState() {
     super.initState();
@@ -163,7 +165,7 @@ final user = _myBox.get(username);
               Text(
                 "Hello, ${user?.Name}",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: fontcollor,
                   fontFamily: "Raleway",
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -172,21 +174,20 @@ final user = _myBox.get(username);
             ],
           ),
           actions: [
-            IconButton(
-              icon: Icon(
-                Icons.calendar_month,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () {
+            InkWell(
+              onTap: () {
+                setState(() {
+                  Darkmode = !Darkmode;
+                  Background = Darkmode ?Color(0xFF131313): Colors.white;
+                  fontcollor = Darkmode ? Colors.white: Colors.black;
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => schedule() ),
-                );
+                });
               },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Darkmode ? Icon(Icons.brightness_3, size: 30) : Icon(Icons.wb_sunny_outlined, size: 30,color: Colors.deepOrangeAccent,),
+              ),
             ),
-            SizedBox(width: 10,)
           ],
 
         ),
@@ -199,13 +200,13 @@ final user = _myBox.get(username);
     } else if (!isDataLoaded) {
       // Tampilkan tampilan jika data gagal dimuat
       return Center(
-        child: Text('Failed to load data.'),
+        child: Text('Failed to load data..'),
       );
     } else {
       // Tampilkan tampilan yang diinginkan ketika data berhasil dimuat
       return Scaffold(
 
-          backgroundColor: Background,
+          backgroundColor:Background,
           appBar: AppBar(
             backgroundColor:Background,
             elevation: 0,
@@ -221,7 +222,7 @@ final user = _myBox.get(username);
                 Text(
                   "Hello, ${user?.Name}",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: fontcollor,
                     fontFamily: "Raleway",
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -230,21 +231,20 @@ final user = _myBox.get(username);
               ],
             ),
             actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.calendar_month,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    Darkmode = !Darkmode;
+                    Background = Darkmode ? Color(0xFF131313): Color(0xFFEBEBEB);
+                    fontcollor = Darkmode ? Colors.white: Colors.black;
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => schedule() ),
-                  );
+                  });
                 },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Darkmode ? Icon(Icons.brightness_3, size: 30) : Icon(Icons.wb_sunny_outlined, size: 30,color: Colors.deepOrangeAccent,),
+                ),
               ),
-              SizedBox(width: 10,)
             ],
 
 
@@ -257,8 +257,7 @@ final user = _myBox.get(username);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => viewmore(
                           data: topanime.sublist(0,25),
-
-                          title: "Top Rating Anime",
+                          title: "Top Rating Anime ",
 
                         )));
                   },
@@ -270,13 +269,13 @@ final user = _myBox.get(username);
                         child: Text("Top Rating Anime" ,
                           style: TextStyle(
                               fontFamily: "Poppins",
-                              color: Colors.white,
+                              color: fontcollor,
                               fontWeight: FontWeight.w400,
                               fontSize: 20
                           ),),
                       ),
                       Icon(Icons.chevron_right,
-                        color: Colors.white,
+                        color: fontcollor,
                         size: 35,)
                     ],
                   )
@@ -318,14 +317,14 @@ final user = _myBox.get(username);
                         margin: EdgeInsets.only(left: 10),
                         child: Text("Genres" ,
                           style: TextStyle(
-                              color: Colors.white,
+                              color: fontcollor,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.w400,
                               fontSize: 20
                           ),),
                       ),
                       Icon(Icons.chevron_right,
-                        color: Colors.white,
+                        color: fontcollor,
                         size: 35,)
                     ],
                   )
@@ -365,14 +364,14 @@ final user = _myBox.get(username);
                         margin: EdgeInsets.only(left: 10),
                         child: Text("Upcoming" ,
                           style: TextStyle(
-                              color: Colors.white,
+                              color: fontcollor,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.w400,
                               fontSize: 20
                           ),),
                       ),
                       Icon(Icons.chevron_right,
-                        color: Colors.white,
+                        color: fontcollor,
                         size: 35,)
                     ],
                   )
@@ -412,13 +411,13 @@ final user = _myBox.get(username);
                         child: Text("Currently Airing" ,
                           style: TextStyle(
                               fontFamily: "Poppins",
-                              color: Colors.white,
+                              color: fontcollor,
                               fontWeight: FontWeight.w400,
                               fontSize: 20
                           ),),
                       ),
                       Icon(Icons.chevron_right,
-                        color: Colors.white,
+                        color: fontcollor,
                         size: 35,)
                     ],
                   )
@@ -458,13 +457,13 @@ final user = _myBox.get(username);
                         child: Text("Most Popular" ,
                           style: TextStyle(
                               fontFamily: "Poppins",
-                              color: Colors.white,
+                              color: fontcollor,
                               fontWeight: FontWeight.w400,
                               fontSize: 20
                           ),),
                       ),
                       Icon(Icons.chevron_right,
-                        color: Colors.white,
+                        color: fontcollor,
                         size: 35,)
                     ],
                   )
@@ -507,7 +506,7 @@ final user = _myBox.get(username);
           padding: const EdgeInsets.all(0.0),
           child: Chip(
             label: Text(name),
-            backgroundColor: Color(0xFF4F576F),
+            backgroundColor: Darkmode? Color(0xFF4F576F) :Color(0xFF131313),
             labelStyle: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

@@ -154,7 +154,7 @@ class _countscheduleState extends State<countschedule> {
                   child: Icon(
                     Icons.arrow_back_outlined,
                     size: 30,
-                    color: Colors.white,
+                    color: fontcollor,
                   ),
                 ),
               ),
@@ -162,7 +162,7 @@ class _countscheduleState extends State<countschedule> {
                 margin: EdgeInsets.only(top: 20,right: 10 ),
                 child: Text(
                   DateFormat.yMMMEd().format(_dateTime),
-                  style: TextStyle(fontSize: 20,color: Colors.white,fontFamily: "Poppins"),
+                  style: TextStyle(fontSize: 20,color: fontcollor,fontFamily: "Poppins"),
                 ),
               ),
             ],
@@ -194,7 +194,7 @@ class _countscheduleState extends State<countschedule> {
                         margin: EdgeInsets.symmetric(horizontal: 4), // Jarak antara komponen waktu
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Color(0xFF865DFF).withOpacity(0.5),
+                          color: Darkmode ?  Color(0xFF865DFF).withOpacity(0.5) : Colors.black87,
                           // Latar belakang putih
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -217,7 +217,7 @@ class _countscheduleState extends State<countschedule> {
                   decoration: BoxDecoration
                     (
                     borderRadius: BorderRadius.circular(8),
-                    color: Color(0xFF865DFF).withOpacity(0.5),
+                    color: Darkmode ?  Color(0xFF865DFF).withOpacity(0.5) : Colors.black87,
                   ),
                   child: DropdownButton(
                     dropdownColor:   Color(0xFF865DFF),

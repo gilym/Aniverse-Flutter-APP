@@ -62,9 +62,12 @@ print(encryptedPassword);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor:Background,
       appBar: AppBar(
-
+        iconTheme: IconThemeData(
+          color:fontcollor, // Atur warna ikon kembali (back) di sini
+        ),
 
         backgroundColor: Background,
         elevation: 0,
@@ -82,17 +85,17 @@ print(encryptedPassword);
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0), // Set border radius
                 ),
-                labelStyle: TextStyle(color: Colors.white), // Set label text color
+                labelStyle: TextStyle(color:fontcollor), // Set label text color
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
                   borderRadius: BorderRadius.circular(30.0), // Set border radius
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white), // Set focused border color
+                  borderSide: BorderSide(color: Darkmode? Colors.white :Colors.deepOrange), // Set focused border color
                   borderRadius: BorderRadius.circular(20.0), // Set border radius
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: fontcollor),
               validator: (value) =>
               value!.isEmpty ? 'Please enter a Your Name' : null,
               onSaved: (value) => _inputYourname = value!,
@@ -106,17 +109,17 @@ print(encryptedPassword);
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0), // Set border radius
                 ),
-                labelStyle: TextStyle(color: Colors.white), // Set label text color
+                labelStyle: TextStyle(color: fontcollor), // Set label text color
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey[400]!), // Set border color
                   borderRadius: BorderRadius.circular(30.0), // Set border radius
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white), // Set focused border color
+                  borderSide: BorderSide(color: Darkmode? Colors.white :Colors.deepOrange), // Set focused border color
                   borderRadius: BorderRadius.circular(20.0), // Set border radius
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: fontcollor),
               validator: (value) =>
               value!.isEmpty ? 'Please enter a username' : null,
               onSaved: (value) => _inputUsername = value!.toLowerCase(),
@@ -130,11 +133,11 @@ print(encryptedPassword);
                   borderRadius: BorderRadius.circular(30.0), // Set border radius
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white), // Set focused border color
+                  borderSide: BorderSide(color: Darkmode? Colors.white :Colors.deepOrange), // Set focused border color
                   borderRadius: BorderRadius.circular(20.0), // Set border radius
                 ),
                 labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: fontcollor),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0), // Set border radius
                 ),
@@ -153,7 +156,7 @@ print(encryptedPassword);
                   },
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: fontcollor),
               validator: (value) =>
               value!.isEmpty ? 'Please enter a password' : null,
               onSaved: (value) => _inputPassword = value!,
@@ -171,7 +174,7 @@ print(encryptedPassword);
                 ),
                 ),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF865DFF) // Set button background color
+                    backgroundColor:Darkmode? Color(0xFF865DFF) :Colors.deepOrange // Set button background color
                 ),
               ),
             ),
