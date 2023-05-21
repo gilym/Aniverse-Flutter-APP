@@ -6,7 +6,7 @@ import 'package:rillanime/viewbygenre.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dashboard.dart';
 import 'discover.dart';
-import 'fetch.dart';
+import 'fetching/fetch.dart';
 import 'main.dart';
 
 

@@ -6,7 +6,7 @@ import 'package:rillanime/bottomnavbar.dart';
 import 'package:rillanime/count.dart';
 
 import 'package:rillanime/viewmore.dart';
-import 'fetchschedule.dart';
+import 'fetching/fetchschedule.dart';
 
 import 'dashboard.dart';
 import 'main.dart';

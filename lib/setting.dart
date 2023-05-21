@@ -63,7 +63,26 @@ class _settingState extends State<setting> {
       appBar: AppBar(
 
         elevation: 0,
-        backgroundColor: Color(0xFF865DFF),
+        backgroundColor: Color(0xFF865DFF),actions: [
+        IconButton(
+          icon: Icon(
+            Icons.logout,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            _myBox.close();
+            _prefs.setBool('isLoggedIn', false);
+            _prefs.remove('username');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
+            );
+          },
+        ),
+
+      ],
+
 
       ),
       body: ListView(

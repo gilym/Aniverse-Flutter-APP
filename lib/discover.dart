@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
-import 'fetch.dart';
+import 'fetching/fetch.dart';
 import 'main.dart';
 
 

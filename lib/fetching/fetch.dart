@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'dart:convert';
 
-import 'main.dart';
-import 'model/user.dart';
+import '../main.dart';
+import '../model/user.dart';
 
 
 // class Fetchall {

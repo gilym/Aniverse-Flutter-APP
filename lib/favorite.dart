@@ -4,7 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
-import 'fetch.dart';
+import 'fetching/fetch.dart';
 
 import 'model/user.dart';
 

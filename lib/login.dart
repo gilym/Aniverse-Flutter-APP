@@ -3,7 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rillanime/bottomnavbar.dart';
 import 'package:rillanime/choseprofile.dart';
 import '../main.dart';
-
 import '../model/user.dart';
 import 'func/encrypt.dart';
 import 'register.dart';
@@ -107,14 +106,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor:   Color(0xFF131313),
-      // appBar: AppBar(
-      //   // backgroundColor: Color(0xFF191825),
-      //   backgroundColor: Color(0xFF865DFF),
-      //   elevation: 0,
-      //   // title: Text('Logi1n'),
-      //   // automaticallyImplyLeading: false,
-      //   // centerTitle: true,
-      // ),
+
       body: Form(
         key: _formKey,
         child: Stack(
@@ -135,8 +127,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
-
             Container(
               margin: EdgeInsets.only(top: 250),
               height: 600,
@@ -295,6 +285,46 @@ class _LoginPageState extends State<LoginPage> {
 
     );
   }
+body: Form(
+  key: _formKey,
+  child: Stack(
+    children: [
+      Container(
+        child: ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black, Colors.transparent],
+            ).createShader(bounds);
+          },
+          blendMode: BlendMode.dstIn,
+          child: Image.asset(
+            "assets/deku.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(top: 250),
+        height: 600,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
+          ),
+          color: Background,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ...
+          ],
+        ),
+      ),
+    ],
+  ),
+),
 
 
 }

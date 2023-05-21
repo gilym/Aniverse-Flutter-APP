@@ -7,9 +7,10 @@ import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/favorite.dart';
 import 'package:rillanime/konversiuang.dart';
 import 'package:rillanime/setting.dart';
+import 'package:rillanime/subscribe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'fetch.dart';
+import 'fetching/fetch.dart';
 import 'main.dart';
 import 'model/user.dart';
 
@@ -110,17 +111,31 @@ class _profileState extends State<profile> {
                 //   },
                 // ),
                 ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Background),
+                    elevation: MaterialStateProperty.all<double>(6),
+                  ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SubscribePage()),
+                    );
                   },
                   icon: Icon(
                     Icons.notifications,
                     size: 24,
+                    color: fontcollor,
                   ),
                   label: Text(
                     'Subscribe',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: "Poppins",
+                      color: fontcollor,
+                    ),
                   ),
                 )
+
               ),
               Positioned(
                 top: 200,

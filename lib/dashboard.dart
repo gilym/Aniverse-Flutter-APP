@@ -9,7 +9,7 @@ import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/viewbygenre.dart';
 import 'package:rillanime/viewmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'fetch.dart';
+import 'fetching/fetch.dart';
 import 'model/user.dart';
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, }) : super(key: key);

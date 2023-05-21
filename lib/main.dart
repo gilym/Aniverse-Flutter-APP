@@ -11,7 +11,10 @@ import 'login.dart';
 
 String boxName = 'userBox';
 String Nameuser='';
-Color Background = Color(0xFF03001C);
+bool Darkmode =true ;
+Color Background =  Color(0xFF131313) ;
+Color fontcollor =Colors.white;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,18 +35,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Tugas UAS TPM',
+      title: 'Tugas UAS TPM ',
       theme: ThemeData(
-        primaryColor: Color(0xFF191825),
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: Color(0xFF191825), // Atur warna latar belakang di sini
-        ),
+        primaryColor: Background, // Atur warna utama sesuai dengan Background yang Anda gunakan
+        scaffoldBackgroundColor: Background,
+
       ),
-      home: SplashScreen(isLoggedIn: isLoggedIn,),
-      routes: {
-        '/botNavBar': (context) => BotNavBar(),
-      },
+      home: SplashScreen(isLoggedIn: isLoggedIn),
     );
+
   }
 }
 
@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
               'ANIVERSE',
               style: TextStyle(
                   fontSize: 80,
-                  color: Colors.white,
+                  color: fontcollor,
                   fontFamily: "Bangers"
               ),
             ),
