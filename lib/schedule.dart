@@ -26,7 +26,6 @@ class _scheduleState extends State<schedule> {
   late List<dynamic> friday;
   late List<dynamic> saturday;
   late List<dynamic> sunday;
-
   bool isLoading = true;
   bool isDataLoaded = false;
 
@@ -127,25 +126,13 @@ class _scheduleState extends State<schedule> {
 
 
 
-  String getDays(Duration duration) {
-    String twoDigits(int n) {
-      if (n >= 10) return "$n";
-      return "0$n";
-    }
-    final days = duration.inDays;
-    final hours = twoDigits(duration.inHours.remainder(24));
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$days days, $hours:$minutes:$seconds';
-  }
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-
-
       body: ListView(
         padding: EdgeInsets.only(top: 50),
         children: [
@@ -165,9 +152,7 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
           SizedBox(height: 30,),
-
           tile("Monday", monday),
           SizedBox(height: 20,),
           SizedBox(
@@ -184,9 +169,7 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
           SizedBox(height: 30,),
-
           tile("Tuesday", tuesday),
           SizedBox(height: 20,),
           SizedBox(
@@ -205,7 +188,6 @@ class _scheduleState extends State<schedule> {
           ),
 
           SizedBox(height: 30,),
-
           tile("Wednesday", wednesday),
           SizedBox(height: 20,),
           SizedBox(
@@ -222,9 +204,7 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
           SizedBox(height: 30,),
-
           tile("Thursday", thursday),
           SizedBox(height: 20,),
           SizedBox(
@@ -241,7 +221,6 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
           SizedBox(height: 30,),
 
           tile("Friday", friday),
@@ -260,9 +239,7 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
           SizedBox(height: 30,),
-
           tile("Saturday", saturday),
           SizedBox(height: 20,),
           SizedBox(
@@ -279,8 +256,6 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-
-
         ],
       ),
     );
@@ -318,7 +293,6 @@ class _scheduleState extends State<schedule> {
   }
 
   Container Aired(Map<String, dynamic> animeData) {
-
     final title = animeData['title'] as String?;
     final imageUrl = animeData['images']['jpg']['image_url'] as String?;
     final day = animeData['broadcast']['day'] as String?;
@@ -327,19 +301,12 @@ class _scheduleState extends State<schedule> {
     final string = animeData['broadcast']['string'] as String?;
     final score = animeData['score'] is int ? animeData['score'].toDouble() : animeData['score'];
 
-
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-
-
-
       ),
       margin: EdgeInsets.symmetric(horizontal: 8),
       width: 370,
-
-
       child: InkWell(
         onTap: () {
           Navigator.push(context,
@@ -434,10 +401,7 @@ class _scheduleState extends State<schedule> {
                       ),
                       textAlign: TextAlign.center,
                     )
-
-
                   ),
-
                 ],
               )
             ),
@@ -450,7 +414,6 @@ class _scheduleState extends State<schedule> {
                   color: Colors.white,
                   fontSize: 20,
                   fontFamily: "Raleway",
-
               ),
             ),
             ),
@@ -468,50 +431,14 @@ class _scheduleState extends State<schedule> {
                 ),
             ),
             )
-
           ],
         )
-
-
-
-
       ),
     );
 
 
   }
 
-  Widget count(String time, String title){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          child: Text(
-           time,
-            style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-                fontFamily: "Oswald",
-                letterSpacing: 1,
-                fontWeight: FontWeight.bold
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Container(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontFamily: "Oswald",
-              letterSpacing: 1,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ],
-    );
-  }
+
 
 }

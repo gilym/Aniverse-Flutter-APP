@@ -285,46 +285,7 @@ class _LoginPageState extends State<LoginPage> {
 
     );
   }
-body: Form(
-  key: _formKey,
-  child: Stack(
-    children: [
-      Container(
-        child: ShaderMask(
-          shaderCallback: (Rect bounds) {
-            return LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.black, Colors.transparent],
-            ).createShader(bounds);
-          },
-          blendMode: BlendMode.dstIn,
-          child: Image.asset(
-            "assets/deku.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.only(top: 250),
-        height: 600,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
-          ),
-          color: Background,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // ...
-          ],
-        ),
-      ),
-    ],
-  ),
-),
+
 
 
 }

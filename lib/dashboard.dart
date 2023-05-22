@@ -158,8 +158,6 @@ final user = _myBox.get(username);
               CircleAvatar(
                 radius: 15,
                 backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
-
-
               ),
               SizedBox(width: 10),
               Text(
@@ -180,7 +178,6 @@ final user = _myBox.get(username);
                   Darkmode = !Darkmode;
                   Background = Darkmode ?Color(0xFF131313): Colors.white;
                   fontcollor = Darkmode ? Colors.white: Colors.black;
-
                 });
               },
               child: Padding(
@@ -189,10 +186,7 @@ final user = _myBox.get(username);
               ),
             ),
           ],
-
         ),
-
-
         body: Center(
           child: CircularProgressIndicator(),
         ),
@@ -488,6 +482,7 @@ final user = _myBox.get(username);
       );
     }
   }
+
   Container _Genres (Map<String, dynamic> Gen){
     final name = Gen ['name'] as String;
     // print(topanime.length);
@@ -521,7 +516,7 @@ final user = _myBox.get(username);
   }
 
   Card _buildAnimeCard(Map<String, dynamic> animeData) {
-    final temp = animeData;
+   
 
     final title = animeData['title'] as String?;
     final imageUrl = animeData['images']['jpg']['image_url'] as String?;

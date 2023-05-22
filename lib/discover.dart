@@ -31,7 +31,8 @@ late bool isLoading;
     }
     else {
 
-      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)  || anime['title_english'].toString().toLowerCase().contains(search) ).toList();
+      var filteredAnime = topanime.where((anime) => anime['title'].toString().toLowerCase().contains(search)  
+      || anime['title_english'].toString().toLowerCase().contains(search) ).toList();
       return filteredAnime;
     }
   }
@@ -109,8 +110,6 @@ late bool isLoading;
     alldata = [];
     topanime = [];
     isLoading = true;
-
-
 
     getTop.fetchtop().then((data) {
       setState(() {

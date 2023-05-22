@@ -16,9 +16,7 @@ class _SubscribePageState extends State<SubscribePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-
       body:Column(
-
         children: [
           Stack(
             children: [
@@ -79,7 +77,6 @@ class _SubscribePageState extends State<SubscribePage> {
                                 fontFamily: "Poppins",
                               ),
                             ),
-
                             SizedBox(
                               width:20 ,
                             ),
@@ -184,7 +181,6 @@ class _SubscribePageState extends State<SubscribePage> {
                             ),
                           ],
                         )
-
                       ],
                     ),
                     ElevatedButton(
@@ -192,7 +188,13 @@ class _SubscribePageState extends State<SubscribePage> {
                           backgroundColor:Darkmode? Color(0xFF865DFF) :Colors.deepOrange// Set button background color
                       ),
                       onPressed: () {
-                        // Logika untuk proses langganan
+                        final snackBar = SnackBar(
+                          content: Text('You Have Subscribed'), // Pesan yang akan ditampilkan di Snackbar
+                          duration: Duration(seconds: 2),
+                          // Durasi tampilan Snackbar (dalam detik)
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'Subscribe Now',

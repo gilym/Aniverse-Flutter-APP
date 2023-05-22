@@ -138,7 +138,6 @@ class _countscheduleState extends State<countschedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-
       body: ListView(
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -342,11 +341,6 @@ class _countscheduleState extends State<countschedule> {
 
             ],
           ),
-
-
-
-
-
         ],
       ),
 

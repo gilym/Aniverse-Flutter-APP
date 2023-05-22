@@ -8,26 +8,7 @@ import '../main.dart';
 import '../model/user.dart';
 
 
-// class Fetchall {
-//   static Future<List<dynamic>> fetchall() async {
-//     List<dynamic> animeData = [];
-//
-//     try {
-//       for (int page = 1; page <= 50; page++) { // ambil data pada halaman 1-5
-//         final url = "https://api.jikan.moe/v4/anime?page=$page";
-//         final file = await DefaultCacheManager().getSingleFile(url);
-//         final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));
-//
-//         final data = response['data'] as List<dynamic>;
-//         animeData.addAll(data);
-//       }
-//     } catch (error) {
-//       print(error);
-//     }
-//
-//     return animeData;
-//   }
-// }
+
 
 class getTop {
   static Future<List<dynamic>> fetchtop() async {

@@ -19,15 +19,19 @@ class _settingState extends State<setting> {
   late SharedPreferences _prefs;
   late String username = '';
   late Future<List<dynamic>> favData = Future.value([]);
-  final String pesan ="Selama mengikuti kelas Teknologi Pemrograman Mobile, saya merasa sangat terinspirasi dan senang. Materi yang diajarkan sangat relevan dengan perkembangan teknologi terkini. Saya mendapatkan pemahaman yang mendalam tentang pembuatan aplikasi mobile menggunakan Flutter. Instruktur sangat kompeten dan responsif dalam menjawab pertanyaan kami. Saya juga mengapresiasi suasana belajar yang interaktif dan kolaboratif di kelas. Terima kasih atas pengalaman yang berharga ini!";
+  final String pesan ="Selama mengikuti kelas Teknologi Pemrograman "
+      "Mobile, saya merasa sangat terinspirasi dan senang. Materi yang diajarkan "
+      "sangat relevan dengan perkembangan teknologi terkini. Saya mendapatkan pemahaman "
+      "yang mendalam tentang pembuatan aplikasi mobile menggunakan Flutter. Instruktur "
+      "sangat kompeten dan responsif dalam menjawab pertanyaan kami. Saya juga mengapresiasi "
+      "suasana belajar yang interaktif dan kolaboratif di kelas. Terima kasih atas pengalaman "
+      "yang berharga ini!";
 
 
   void initState() {
     super.initState();
     _myBox = Hive.box(boxName);
-
     _openBox();
-
 
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
@@ -35,12 +39,10 @@ class _settingState extends State<setting> {
       });
     });
   }
-
   void _openBox() async {
     await Hive.openBox<UserModel>(boxName);
     _myBox = Hive.box<UserModel>(boxName);
   }
-
   Future<void> loadUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -48,7 +50,6 @@ class _settingState extends State<setting> {
       username = prefs.getString('username') ?? '';
     });
   }
-
   Future<void> _launchUrl(String url) async {
     final Uri _url = Uri.parse(url);
     if (!await launchUrl(_url)) {
@@ -61,7 +62,6 @@ class _settingState extends State<setting> {
     return Scaffold(
       backgroundColor: Background,
       appBar: AppBar(
-
         elevation: 0,
         backgroundColor: Color(0xFF865DFF),actions: [
         IconButton(
@@ -204,20 +204,6 @@ class _settingState extends State<setting> {
               ],
             ),
           )
-
-          // InkWell(
-          //   onTap: (){
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) =>CurrencyConverter()),
-          //     );
-          //   },
-          //   child:
-          //   Icon(Icons.add,
-          //   color: Colors.white,
-          //   size: 30,),
-          // )
-
         ],
       ),
 

@@ -27,22 +27,12 @@ class _viewmoreState extends State<viewmore> {
   void initState() {
     super.initState();
 
-    topanime = [];
-    getTop.fetchtop().then((data) {
-      setState(() {
-        topanime = data;
-      });
-    }).catchError((error) {
-      print(error);
-    });
-
+    
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: Background,
       appBar: AppBar(
@@ -51,7 +41,6 @@ class _viewmoreState extends State<viewmore> {
         iconTheme: IconThemeData(
           color: fontcollor, // Atur warna ikon kembali (back) di sini
         ),
-
         title: Text(
           widget.title,
           style: TextStyle(
@@ -61,7 +50,6 @@ class _viewmoreState extends State<viewmore> {
             fontSize: 21,
           ),
         ),
-
       ),
       body: ListView(
         children: [
@@ -91,18 +79,9 @@ class _viewmoreState extends State<viewmore> {
                   }),
                 ),
               )
-
-
-
           ),
-
-
-
         ],
       ),
-
-
-
     );
   }
 

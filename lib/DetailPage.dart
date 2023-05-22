@@ -83,9 +83,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
       WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
     });
 
-    print(widget.ranking );
-    print("Kontol");
-
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
@@ -118,7 +115,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
     print(_isFavorite);
   }
   void _updateFavoriteStatus() {
-
     final userModel = _myBox.get(username);
     if (userModel != null) {
       final favoritesList = userModel.favorites ?? [];
@@ -326,11 +322,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                 ],
                               ),
                             ),
-
-
-
                           ),
-
                         ],
                       ),
                     ],
@@ -459,7 +451,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 SizedBox(height: 20,),
                 info("Status", widget.status ?? "-",),
                 Container(
-
                   child:
                   Divider(
                     thickness: 1,
@@ -468,7 +459,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 ),
                 info("Season", widget.season ?? "-"),
                 Container(
-
                   child:
                   Divider(
                     thickness: 1,
@@ -477,7 +467,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 ),
                 info("Studios", widget.studio ?? "-"),
                 Container(
-
                   child:
                   Divider(
                     thickness: 1,
@@ -486,17 +475,14 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 ),
                 info("Source", widget.source ?? "-"),
                 Container(
-
                   child:
                   Divider(
                     thickness: 1,
                     color: Colors.grey[300],
                   ),
                 ),
-
                 info("Rating", widget.rating ?? "-"),
                 Container(
-
                   child:
                   Divider(
                     thickness: 1,
@@ -512,25 +498,12 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                     color: Colors.grey[300],
                   ),
                 ),
-
-
                 SizedBox(height: 50,),
-
-
-
-
               ],
             ),
           ),
-
-
-
-
-
         ],
       ),
-
-
     );
   }
 
@@ -542,7 +515,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
   }
 
   Widget info (String title , String data){
-
     return Padding(padding:  const EdgeInsets.only(left: 2,right: 7,bottom: 4,top: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -559,13 +531,11 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
 
             ),),
 
-
         ],
       ),);
   }
 
   Widget icon (String data, String judul , IconData icon){
-
     return Column(
       children: [
         Icon(icon,
