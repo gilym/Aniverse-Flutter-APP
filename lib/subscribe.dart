@@ -15,7 +15,7 @@ class _SubscribePageState extends State<SubscribePage> {
   double price =2.99;
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Background,
+      backgroundColor: Color(0xFF131313),
       body:Column(
         children: [
           Stack(
@@ -39,15 +39,28 @@ class _SubscribePageState extends State<SubscribePage> {
                 ),
               ),
               Container(
-                height: 450,
+                height: 503,
                 decoration: BoxDecoration(
                   color: Background,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
                 ),
-                margin: EdgeInsets.only(top:350),
+                margin: EdgeInsets.only(top:340),
                 child: Column(
                   children: [
-                    SizedBox(height: 50),
+                    Container(
+                      margin: EdgeInsets.only(left: 20,top: 20),
+                      alignment: Alignment.topLeft,
+                      child:
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(Icons.arrow_back,
+                        color: fontcollor,
+                        size: 30,),
+                      ),
+                    ),
+
                     Text(
                       'AniVerse Subscription',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: fontcollor,fontFamily: "Poppins"),
@@ -182,6 +195,9 @@ class _SubscribePageState extends State<SubscribePage> {
                           ],
                         )
                       ],
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
