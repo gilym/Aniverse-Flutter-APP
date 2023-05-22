@@ -16,5 +16,13 @@ class UserModel extends HiveObject {
   @HiveField(3)
   String? image;
 
-  UserModel({required this.password, this.favorites, this.Name, this.image});
+  @HiveField(4)
+  bool? subs;
+
+
+
+
+
+  UserModel({required this.password, this.favorites, this.Name, this.image , this.subs});
 }
+

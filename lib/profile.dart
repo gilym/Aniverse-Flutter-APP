@@ -132,13 +132,27 @@ class _profileState extends State<profile> {
                       backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
                     ),
                     SizedBox(height: 10,),
-                    Text(user?.Name ?? 'Unknown',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontFamily: "Raleway",
-                          fontWeight: FontWeight.bold
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(user?.Name ?? 'Unknown',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontFamily: "Raleway",
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        user?.subs == true
+                            ? Container(
+                          width: 25,
+                          height: 25,
+                          child: Image.asset("assets/verified.png"),
+                        )
+                            : Container(),
+
+                      ],
                     ),
                     SizedBox(height: 2,),
                     Text("@" + username,

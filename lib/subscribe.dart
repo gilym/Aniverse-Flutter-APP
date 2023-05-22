@@ -1,8 +1,12 @@
 import 'package:flag/flag_enum.dart';
 import 'package:flag/flag_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bottomnavbar.dart';
 import 'main.dart';
+import 'model/user.dart';
 
 class SubscribePage extends StatefulWidget {
   @override
@@ -13,16 +17,60 @@ class _SubscribePageState extends State<SubscribePage> {
   @override
   String _currency = 'USD';
   double price =2.99;
+  late SharedPreferences _prefs;
+  late String username = '';
+  late Box<UserModel> _myBox;
+  @override
+  void initState() {
+    super.initState();
+    _openBox();
+    loadUsername().then((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
+    });
+
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+      });
+    });
+
+  }
+  void _openBox() async {
+    await Hive.openBox<UserModel>(boxName);
+    _myBox = Hive.box<UserModel>(boxName);
+  }
+
+  Future<void> loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _prefs = prefs;
+      username = prefs.getString('username') ?? '';
+    });
+  }
+
+  void _updateFavoriteStatus() {
+    final userModel = _myBox.get(username);
+    if (userModel != null) {
+      userModel.subs = true; // Memperbarui nilai subs menjadi true
+      userModel.save(); // Menyimpan perubahan ke database Hive
+      _myBox.put(username, userModel); // Mengganti objek lama dengan objek yang diperbarui
+      print("Berhasil menambahkan ke Subscribe");
+    }
+  }
+
+
+
   Widget build(BuildContext context) {
+    final user = _myBox.get(username);
     return Scaffold(
       backgroundColor: Color(0xFF131313),
-      body:Column(
+      body:ListView(
         children: [
           Stack(
             children: [
               Container(
                 padding: EdgeInsets.zero,
-                height: 400,
+                height: 399,
                 child: ShaderMask(
                   shaderCallback: (Rect bounds) {
                     return LinearGradient(
@@ -41,11 +89,11 @@ class _SubscribePageState extends State<SubscribePage> {
               Container(
                 height: 503,
                 decoration: BoxDecoration(
-                  color: Background,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
+                    color: Background,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
                 ),
                 margin: EdgeInsets.only(top:340),
-                child: Column(
+                child: user?.subs ==false ? Column(
                   children: [
                     Container(
                       margin: EdgeInsets.only(left: 20,top: 20),
@@ -56,8 +104,8 @@ class _SubscribePageState extends State<SubscribePage> {
                           Navigator.of(context).pop();
                         },
                         child: Icon(Icons.arrow_back,
-                        color: fontcollor,
-                        size: 30,),
+                          color: fontcollor,
+                          size: 30,),
                       ),
                     ),
 
@@ -74,7 +122,7 @@ class _SubscribePageState extends State<SubscribePage> {
                     SizedBox(height: 20),
                     advantage( 'Access to exclusive anime series'),
                     advantage( 'Early access to new episodes'),
-                    advantage( 'Ad-free streaming experience'),
+                    advantage( 'Get verified account'),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -204,19 +252,78 @@ class _SubscribePageState extends State<SubscribePage> {
                           backgroundColor:Darkmode? Color(0xFF865DFF) :Colors.deepOrange// Set button background color
                       ),
                       onPressed: () {
+                        _updateFavoriteStatus();
                         final snackBar = SnackBar(
                           content: Text('You Have Subscribed'), // Pesan yang akan ditampilkan di Snackbar
                           duration: Duration(seconds: 2),
                           // Durasi tampilan Snackbar (dalam detik)
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        Navigator.of(context).pop();
+
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BotNavBar()), (route) => false);
                       },
                       child: Text(
                         'Subscribe Now',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
+                  ],
+                ) : Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 20,top: 20),
+                      alignment: Alignment.topLeft,
+                      child:
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(Icons.arrow_back,
+                          color: fontcollor,
+                          size: 30,),
+                      ),
+                    ),
+                    Container(
+
+                      height: 430,
+
+                      child: Column (
+
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Thank You',
+                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: fontcollor,fontFamily: "Poppins"),
+                          ),
+                          Text(
+                            'You Have Subscribe',
+                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: fontcollor,fontFamily: "Poppins"),
+                          ),
+                          SizedBox(height: 30,),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:Darkmode? Color(0xFF865DFF) :Colors.deepOrange// Set button background color
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'Back',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+                    SizedBox(height: 10),
+
+
+                    SizedBox(height: 10),
+
+
+
                   ],
                 ),
               )

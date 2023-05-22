@@ -27,6 +27,14 @@ class _viewmoreState extends State<viewmore> {
   void initState() {
     super.initState();
 
+    topanime = [];
+    getTop.fetchtop().then((data) {
+      setState(() {
+        topanime = data;
+      });
+    }).catchError((error) {
+      print(error);
+    });
     
   }
 

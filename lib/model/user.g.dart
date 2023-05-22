@@ -21,13 +21,14 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       favorites: (fields[1] as List?)?.cast<int>(),
       Name: fields[2] as String?,
       image: fields[3] as String?,
+      subs: fields[4] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.password)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(2)
       ..write(obj.Name)
       ..writeByte(3)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(4)
+      ..write(obj.subs);
   }
 
   @override

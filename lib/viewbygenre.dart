@@ -19,7 +19,6 @@ class _viewbygenreState extends State<viewbygenre> {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 

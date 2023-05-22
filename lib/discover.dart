@@ -133,8 +133,9 @@ late bool isLoading;
         backgroundColor: Background,
         elevation: 0,
         title: Container(
+
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Darkmode ? Colors.white : Colors.grey[400],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -150,7 +151,7 @@ late bool isLoading;
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: 'Search Anime'+topanime.length.toString(),
+                      hintText: 'Search Anime '+topanime.length.toString(),
                       border: InputBorder.none,
                       suffixIcon:Icon( Icons.search),
 

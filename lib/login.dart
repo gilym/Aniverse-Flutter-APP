@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       final user = _myBox.get(_inputUsername);
+      print(user?.subs);
       final encryptedPassword = EncryptData.decryptAES(user!.password);
       if (_inputPassword == encryptedPassword) {
         // Save user's session
@@ -153,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   SizedBox(height: 30,),
                   Container(
-                    width: 385,
+                    width: MediaQuery.of(context).size.width/1.08,
                     child: Column(
                       children: [
                         TextFormField(

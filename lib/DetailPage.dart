@@ -70,15 +70,16 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
   bool _isExpanded = false;
   bool _isFavorite = false;
   bool _showAppBar = false;
-  late Box<UserModel> _myBox;
+
   final String boxName = 'userBox';
   late String username = '';
   late Future<List<dynamic>> favData;
   late SharedPreferences _prefs;
-
+  late Box<UserModel> _myBox;
   @override
   void initState() {
     super.initState();
+
     loadUsername().then((_) {
       WidgetsBinding.instance!.addPostFrameCallback((_) => _openBox());
     });
@@ -122,7 +123,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
         favoritesList.add(widget.id);
         userModel.favorites = favoritesList;
         userModel.save();
-        _myBox.put(Nameuser, userModel);
+        _myBox.put(username, userModel);
         print("Berhasil menambahkan ke favorit");
       } else {
         favoritesList.remove(widget.id);
