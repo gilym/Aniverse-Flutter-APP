@@ -19,13 +19,7 @@ class _settingState extends State<setting> {
   late SharedPreferences _prefs;
   late String username = '';
   late Future<List<dynamic>> favData = Future.value([]);
-  final String pesan ="Selama mengikuti kelas Teknologi Pemrograman "
-      "Mobile, saya merasa sangat terinspirasi dan senang. Materi yang diajarkan "
-      "sangat relevan dengan perkembangan teknologi terkini. Saya mendapatkan pemahaman "
-      "yang mendalam tentang pembuatan aplikasi mobile menggunakan Flutter. Instruktur "
-      "sangat kompeten dan responsif dalam menjawab pertanyaan kami. Saya juga mengapresiasi "
-      "suasana belajar yang interaktif dan kolaboratif di kelas. Terima kasih atas pengalaman "
-      "yang berharga ini!";
+  final String pesan ="Pelajaran TPM sangat menyenangkan, banyak ilmu yang saya dapatkan selama mengikuti perkuliahan .";
 
 
   void initState() {

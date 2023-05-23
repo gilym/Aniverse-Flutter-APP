@@ -167,7 +167,7 @@ class _countscheduleState extends State<countschedule> {
             ],
           ),
           Container(
-            height: 150,width: 100,
+            height: 120,width: 100,
             decoration: BoxDecoration(
 
 
@@ -193,13 +193,13 @@ class _countscheduleState extends State<countschedule> {
                         margin: EdgeInsets.symmetric(horizontal: 4), // Jarak antara komponen waktu
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Darkmode ?  Color(0xFF865DFF).withOpacity(0.5) : Colors.black87,
+                          color: Darkmode ?  Colors.white : Colors.black87,
                           // Latar belakang putih
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           component,
-                          style: TextStyle(fontSize:40, color: Colors.white,
+                          style: TextStyle(fontSize:40, color: Darkmode ?Colors.black: Colors.white,
                               fontFamily: "Poppins"), // Ukuran font diperbesar
                         ),
                       );
@@ -211,16 +211,16 @@ class _countscheduleState extends State<countschedule> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  width: 120,
+                  width: 85,
                   height: 52,
                   decoration: BoxDecoration
                     (
                     borderRadius: BorderRadius.circular(8),
-                    color: Darkmode ?  Color(0xFF865DFF).withOpacity(0.5) : Colors.black87,
+                    color: Darkmode ?  Colors.white : Colors.black87,
                   ),
                   child: DropdownButton(
-                    dropdownColor:   Color(0xFF865DFF),
-                    iconEnabledColor: Colors.white, // Mengubah warna ikon menjadi hitam
+                    dropdownColor:   Darkmode ?  Colors.white : Colors.black87,
+                    iconEnabledColor: Darkmode? Colors.black: Colors.white, // Mengubah warna ikon menjadi hitam
                     value: dropdownvalue,
                     borderRadius: BorderRadius.circular(8),
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -232,7 +232,7 @@ class _countscheduleState extends State<countschedule> {
                         value: items,
                         child: Text(
                           items,
-                          style: TextStyle(color: Colors.white,
+                          style: TextStyle(color: Darkmode? Colors.black: Colors.white,
                               fontFamily: "Poppins",
                           fontSize: 20),
                         ),
