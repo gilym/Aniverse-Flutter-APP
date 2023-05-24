@@ -1,4 +1,4 @@
-# rillanime
+# Aniverse
 
 Project Akhir Prak TPM.
 Anime Wiki App
