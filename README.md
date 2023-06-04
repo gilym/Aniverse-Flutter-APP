@@ -16,5 +16,5 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-![Teks Alternatif]([https://media.suara.com/pictures/653x366/2022/04/10/86752-ilustrasi-anime-jepang-populerfacebookfandom.jpg](https://drive.google.com/file/d/1b7txEFx_qaOvgZ48kal4eWlAk9YOr311/view?usp=share_link))
+![Teks Alternatif]([https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/1.png])
 
