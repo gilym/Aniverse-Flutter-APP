@@ -260,7 +260,7 @@ class _SubscribePageState extends State<SubscribePage> {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BotNavBar()), (route) => false);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BottomNavbar()), (route) => false);
                       },
                       child: Text(
                         'Subscribe Now',

@@ -254,6 +254,7 @@ class _profileState extends State<profile> {
                     return SizedBox(
                       height: 250,
                       child: ListView.builder(
+                        physics: PageScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount:  fav.length,
                         itemBuilder: (context, index) {
@@ -304,6 +305,7 @@ class _profileState extends State<profile> {
     final type =animeData['type'] as String?;
 
     return Container(
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
 
@@ -311,7 +313,7 @@ class _profileState extends State<profile> {
 
       ),
       margin: EdgeInsets.symmetric(horizontal: 8),
-      width: 370,
+      width: MediaQuery.of(context).size.width/1.06,
 
 
       child: InkWell(

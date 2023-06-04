@@ -33,7 +33,7 @@ class _settingState extends State<setting> {
       });
     });
   }
-  void _openBox() async {
+   void _openBox() async {
     await Hive.openBox<UserModel>(boxName);
     _myBox = Hive.box<UserModel>(boxName);
   }
@@ -57,25 +57,26 @@ class _settingState extends State<setting> {
       backgroundColor: Background,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFF865DFF),actions: [
-        IconButton(
-          icon: Icon(
-            Icons.logout,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            _myBox.close();
-            _prefs.setBool('isLoggedIn', false);
-            _prefs.remove('username');
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
-            );
-          },
-        ),
-
-      ],
+        backgroundColor: Color(0xFF865DFF),
+      //   actions: [
+      //   IconButton(
+      //     icon: Icon(
+      //       Icons.logout,
+      //       color: Colors.white,
+      //       size: 30,
+      //     ),
+      //     onPressed: () {
+      //       _myBox.close();
+      //       _prefs.setBool('isLoggedIn', false);
+      //       _prefs.remove('username');
+      //       Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => MyApp(isLoggedIn: false)),
+      //       );
+      //     },
+      //   ),
+      //
+      // ],
 
 
       ),

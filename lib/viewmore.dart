@@ -22,21 +22,23 @@ class viewmore extends StatefulWidget {
 }
 
 class _viewmoreState extends State<viewmore> {
-  late List<dynamic> topanime;
+  late List<dynamic> topanime=[];
   @override
   void initState() {
     super.initState();
 
-    topanime = [];
+
     getTop.fetchtop().then((data) {
       setState(() {
         topanime = data;
+
       });
     }).catchError((error) {
       print(error);
     });
     
   }
+
 
 
   @override
@@ -80,10 +82,9 @@ class _viewmoreState extends State<viewmore> {
                 child: Wrap(
                   spacing: 10, // Menambahkan jarak horizontal antar widget
                   runSpacing: 5, // Menambahkan jarak vertical antar widget
-                  children: List.generate(19, (index) {
+                  children: List.generate(18, (index) {
                     final genre = widget.data[index];
-
-                    return _Genres(genre);
+                    return _Genres(genre,topanime);
                   }),
                 ),
               )
@@ -93,15 +94,16 @@ class _viewmoreState extends State<viewmore> {
     );
   }
 
-  Container _Genres (Map<String, dynamic> Gen){
+  Container _Genres (Map<String, dynamic> Gen ,List<dynamic> animex){
     final name = Gen ['name'] as String;
 
     return Container(
       child: InkWell(
         onTap: (){
+
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => viewbygenre(
-                data: topanime,
+                data: animex,
                 title: name,
               )));
         },

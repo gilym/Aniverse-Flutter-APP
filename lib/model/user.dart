@@ -21,8 +21,6 @@ class UserModel extends HiveObject {
 
 
 
-
-
   UserModel({required this.password, this.favorites, this.Name, this.image , this.subs});
 }
 

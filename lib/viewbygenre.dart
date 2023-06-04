@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
 
@@ -14,9 +16,16 @@ class viewbygenre extends StatefulWidget {
   @override
   State<viewbygenre> createState() => _viewbygenreState();
 }
-
 class _viewbygenreState extends State<viewbygenre> {
 
+  late int tes =widget.data.where((anime) =>
+      anime['genres'].any((genre) => genre['name'] == widget.title)).length;
+
+  @override
+  void initState() {
+    super.initState();
+print(tes);
+  }
 
 
   @override
@@ -54,6 +63,7 @@ class _viewbygenreState extends State<viewbygenre> {
                 childAspectRatio:0.75,
                 children: List.generate(widget.data.where((anime) =>
                     anime['genres'].any((genre) => genre['name'] == widget.title)).length, (index) {
+
                   final List<dynamic> data = widget.data.where((anime) =>
                       anime['genres'].any((genre) => genre['name'] == widget.title)).toList();
 

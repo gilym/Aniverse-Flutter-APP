@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => widget.isLoggedIn ? BotNavBar() : const LoginPage(),),
+        MaterialPageRoute(builder: (context) => widget.isLoggedIn ? BottomNavbar() : const LoginPage(),),
       );
     });
   }

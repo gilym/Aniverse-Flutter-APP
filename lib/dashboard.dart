@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:rillanime/schedule.dart';
 
+import 'bottomnavbar.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -11,8 +12,11 @@ import 'package:rillanime/viewmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'fetching/fetch.dart';
 import 'model/user.dart';
+
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key, }) : super(key: key);
+  const Dashboard({
+    Key? key,
+  }) : super(key: key);
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -25,15 +29,11 @@ class _DashboardState extends State<Dashboard> {
   late List<dynamic> airing;
   late List<dynamic> popular;
   late List<dynamic> fav;
-late String username='';
+  late String username = '';
   late Box<UserModel> _myBox;
   late SharedPreferences _prefs;
   bool isLoading = true;
   bool isDataLoaded = false;
-
-
-
-
 
   @override
   void initState() {
@@ -47,7 +47,6 @@ late String username='';
     });
 
     _openBox();
-
 
     alldata = [];
     topanime = [];
@@ -69,10 +68,9 @@ late String username='';
       }
     }
 
-loadUsername();
+    loadUsername();
 
     getTop.fetchtop().then((data) {
-
       setState(() {
         topanime = data;
       });
@@ -129,7 +127,6 @@ loadUsername();
       _prefs = prefs;
       username = prefs.getString('username') ?? '';
     });
-
   }
 
   void _openBox() async {
@@ -137,27 +134,25 @@ loadUsername();
     _myBox = Hive.box<UserModel>(boxName);
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-print(username);
-final random = Random();
-airing.shuffle(random);
-final user = _myBox.get(username);
+    print(username);
+    final random = Random();
+    airing.shuffle(random);
+    final user = _myBox.get(username);
     if (isLoading) {
       // Tampilkan tampilan loading saat data sedang dimuat
       return Scaffold(
         backgroundColor: Background,
         appBar: AppBar(
-          backgroundColor:Background,
+          backgroundColor: Background,
           elevation: 0,
           title: Row(
             children: [
               CircleAvatar(
                 radius: 15,
-                backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
+                backgroundImage:
+                    AssetImage(user?.image ?? 'fallback_image_path'),
               ),
               SizedBox(width: 10),
               Text(
@@ -176,13 +171,19 @@ final user = _myBox.get(username);
               onTap: () {
                 setState(() {
                   Darkmode = !Darkmode;
-                  Background = Darkmode ?Color(0xFF131313): Colors.white;
-                  fontcollor = Darkmode ? Colors.white: Colors.black;
+                  Background = Darkmode ? Color(0xFF131313) : Colors.white;
+                  fontcollor = Darkmode ? Colors.white : Colors.black;
                 });
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Darkmode ? Icon(Icons.brightness_3, size: 30) : Icon(Icons.wb_sunny_outlined, size: 30,color: Colors.deepOrangeAccent,),
+                child: Darkmode
+                    ? Icon(Icons.brightness_3, size: 30)
+                    : Icon(
+                        Icons.wb_sunny_outlined,
+                        size: 30,
+                        color: Colors.deepOrangeAccent,
+                      ),
               ),
             ),
           ],
@@ -199,18 +200,16 @@ final user = _myBox.get(username);
     } else {
       // Tampilkan tampilan yang diinginkan ketika data berhasil dimuat
       return Scaffold(
-
-          backgroundColor:Background,
+          backgroundColor: Background,
           appBar: AppBar(
-            backgroundColor:Background,
+            backgroundColor: Background,
             elevation: 0,
             title: Row(
               children: [
                 CircleAvatar(
                   radius: 15,
-                  backgroundImage: AssetImage(user?.image ?? 'fallback_image_path'),
-
-
+                  backgroundImage:
+                      AssetImage(user?.image ?? 'fallback_image_path'),
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -229,51 +228,57 @@ final user = _myBox.get(username);
                 onTap: () {
                   setState(() {
                     Darkmode = !Darkmode;
-                    Background = Darkmode ? Color(0xFF131313): Color(0xFFEBEBEB);
-                    fontcollor = Darkmode ? Colors.white: Colors.black;
-
+                    Background =
+                        Darkmode ? Color(0xFF131313) : Color(0xFFEBEBEB);
+                    fontcollor = Darkmode ? Colors.white : Colors.black;
                   });
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Darkmode ? Icon(Icons.brightness_3, size: 30) : Icon(Icons.wb_sunny_outlined, size: 30,color: Colors.deepOrangeAccent,),
+                  child: Darkmode
+                      ? Icon(Icons.brightness_3, size: 30)
+                      : Icon(
+                          Icons.wb_sunny_outlined,
+                          size: 30,
+                          color: Colors.deepOrangeAccent,
+                        ),
                 ),
               ),
             ],
-
-
-          )
-          ,
+          ),
           body: ListView(
             children: [
               InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => viewmore(
-                          data: topanime.sublist(0,25),
-                          title: "Top Rating Anime ",
-
-                        )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => viewmore(
+                                  data: topanime.sublist(0, 25),
+                                  title: "Top Rating Anime ",
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10),
-                        child: Text("Top Rating Anime" ,
+                        child: Text(
+                          "Top Rating Anime",
                           style: TextStyle(
                               fontFamily: "Poppins",
                               color: fontcollor,
                               fontWeight: FontWeight.w400,
-                              fontSize: 20
-                          ),),
+                              fontSize: 20),
+                        ),
                       ),
-                      Icon(Icons.chevron_right,
+                      Icon(
+                        Icons.chevron_right,
                         color: fontcollor,
-                        size: 35,)
+                        size: 35,
+                      )
                     ],
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 10,
               ),
@@ -281,7 +286,6 @@ final user = _myBox.get(username);
                 height: 260,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-
                   itemCount: 25,
                   itemBuilder: (context, index) {
                     final anime = topanime[index];
@@ -296,86 +300,95 @@ final user = _myBox.get(username);
                 height: 20,
               ),
               InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => viewmore(
-                          data: genreanime,
-                          title: "Genres",
-
-                        )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => viewmore(
+                                  data: genreanime,
+                                  title: "Genres",
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10),
-                        child: Text("Genres" ,
+                        child: Text(
+                          "Genres",
                           style: TextStyle(
                               color: fontcollor,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.w400,
-                              fontSize: 20
-                          ),),
+                              fontSize: 20),
+                        ),
                       ),
-                      Icon(Icons.chevron_right,
+                      Icon(
+                        Icons.chevron_right,
                         color: fontcollor,
-                        size: 35,)
+                        size: 35,
+                      )
                     ],
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 50,
-                child:ListView.builder(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).length,
+                  itemCount: genreanime
+                      .where((genre) =>
+                          genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
+                      .length,
                   itemBuilder: (context, index) {
-                    final genre1 = genreanime.where((genre) => genre['mal_id'] >= 1 && genre['mal_id'] <= 10).toList()[index];
+                    final genre1 = genreanime
+                        .where((genre) =>
+                            genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
+                        .toList()[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: _Genres(genre1),
                     );
                   },
-                )
-                ,
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
               InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => viewmore(
-                          data: upcoming,
-
-                          title: "Upcoming",
-
-                        )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => viewmore(
+                                  data: upcoming,
+                                  title: "Upcoming",
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10),
-                        child: Text("Upcoming" ,
+                        child: Text(
+                          "Upcoming",
                           style: TextStyle(
                               color: fontcollor,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.w400,
-                              fontSize: 20
-                          ),),
+                              fontSize: 20),
+                        ),
                       ),
-                      Icon(Icons.chevron_right,
+                      Icon(
+                        Icons.chevron_right,
                         color: fontcollor,
-                        size: 35,)
+                        size: 35,
+                      )
                     ],
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 260,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-
-                  itemCount:  upcoming.length,
+                  itemCount: upcoming.length,
                   itemBuilder: (context, index) {
                     final anime = upcoming[index];
                     return Padding(
@@ -389,38 +402,41 @@ final user = _myBox.get(username);
                 height: 20,
               ),
               InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => viewmore(
-                          data: airing,
-                          title: "Currently Airing",
-
-                        )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => viewmore(
+                                  data: airing,
+                                  title: "Currently Airing",
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10),
-                        child: Text("Currently Airing" ,
+                        child: Text(
+                          "Currently Airing",
                           style: TextStyle(
                               fontFamily: "Poppins",
                               color: fontcollor,
                               fontWeight: FontWeight.w400,
-                              fontSize: 20
-                          ),),
+                              fontSize: 20),
+                        ),
                       ),
-                      Icon(Icons.chevron_right,
+                      Icon(
+                        Icons.chevron_right,
                         color: fontcollor,
-                        size: 35,)
+                        size: 35,
+                      )
                     ],
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 230,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount:  airing.length,
+                  itemCount: airing.length,
                   itemBuilder: (context, index) {
                     final anime = airing[index];
                     return Padding(
@@ -434,40 +450,41 @@ final user = _myBox.get(username);
                 height: 20,
               ),
               InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => viewmore(
-                          data: popular,
-                          title: "Most Popular",
-                          )
-                        )
-                    );
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => viewmore(
+                                  data: popular,
+                                  title: "Most Popular",
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 10),
-                        child: Text("Most Popular" ,
+                        child: Text(
+                          "Most Popular",
                           style: TextStyle(
                               fontFamily: "Poppins",
                               color: fontcollor,
                               fontWeight: FontWeight.w400,
-                              fontSize: 20
-                          ),),
+                              fontSize: 20),
+                        ),
                       ),
-                      Icon(Icons.chevron_right,
+                      Icon(
+                        Icons.chevron_right,
                         color: fontcollor,
-                        size: 35,)
+                        size: 35,
+                      )
                     ],
-                  )
-              ),
+                  )),
               SizedBox(
                 height: 260,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-
-                  itemCount:  popular.length,
+                  itemCount: popular.length,
                   itemBuilder: (context, index) {
                     final anime = popular[index];
                     return Padding(
@@ -478,69 +495,68 @@ final user = _myBox.get(username);
                 ),
               ),
             ],
-          )
-      );
+          ));
     }
   }
 
-  Container _Genres (Map<String, dynamic> Gen){
-    final name = Gen ['name'] as String;
+  Container _Genres(Map<String, dynamic> Gen) {
+    final name = Gen['name'] as String;
     // print(topanime.length);
     return Container(
-
-      child: InkWell(
-        onTap:  (){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => viewbygenre(
-                data: topanime,
-                title: name,
-
-              )));
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Chip(
-            label: Text(name),
-            backgroundColor: Darkmode? Color(0xFF4F576F) :Color(0xFF131313),
-            labelStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                fontFamily: "Raleway"
-            ),
-          ),
+        child: InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => viewbygenre(
+                      data: topanime,
+                      title: name,
+                    )));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: Chip(
+          label: Text(name),
+          backgroundColor: Darkmode ? Color(0xFF4F576F) : Color(0xFF131313),
+          labelStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              fontFamily: "Raleway"),
         ),
-      )
-    );
-
+      ),
+    ));
   }
 
   Card _buildAnimeCard(Map<String, dynamic> animeData) {
-   
-
     final title = animeData['title'] as String?;
     final imageUrl = animeData['images']['jpg']['image_url'] as String?;
-    final score = animeData['score'] is int ? animeData['score'].toDouble() : animeData['score'];
+    final score = animeData['score'] is int
+        ? animeData['score'].toDouble()
+        : animeData['score'];
     final url = animeData['url'] as String?;
     final synopsis = animeData['synopsis'] as String?;
     final id = animeData['mal_id'] as int;
     final trailer = animeData['trailer']['url'] as String?;
-    final genres = (animeData['genres'] as List).map((
-        genre) => genre['name'] as String).toList();
+    final genres = (animeData['genres'] as List)
+        .map((genre) => genre['name'] as String)
+        .toList();
     final episodes = animeData['episodes'] as int?;
     final duration = animeData['duration'] as String?;
     final rank = animeData['rank'] as int?;
     final favorite = animeData['favorites'] as int?;
     final member = animeData['members'] as int?;
     final popularity = animeData['popularity'] as int?;
-    final status =animeData['status'] as String?;
-    final season =animeData['season'] as String?;
+    final status = animeData['status'] as String?;
+    final season = animeData['season'] as String?;
     final studios = animeData['studios'];
-    final studio = studios != null && studios.isNotEmpty && studios[0] != null ? studios[0]['name'] as String? : '';
-    final source =animeData['source'] as String?;
-    final rating =animeData['rating'] as String?;
+    final studio = studios != null && studios.isNotEmpty && studios[0] != null
+        ? studios[0]['name'] as String?
+        : '';
+    final source = animeData['source'] as String?;
+    final rating = animeData['rating'] as String?;
     final idyoutube = animeData['trailer']['youtube_id'] as String?;
-    final type =animeData['type'] as String?;
+    final type = animeData['type'] as String?;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -549,30 +565,32 @@ final user = _myBox.get(username);
       ),
       child: InkWell(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AnimeDetailScreen(
-                title: title,
-                imageUrl: imageUrl,
-                url: url,
-                synopsis: synopsis,
-                id: id,
-                score: score,
-                trailer: trailer,
-                genres: genres,
-                episodes: episodes,
-                duration: duration,
-                ranking: rank,
-                favorite: favorite,
-                member: member,
-                popularity: popularity,
-                status: status,
-                season: season,
-                studio: studio,
-                source: source,
-                rating: rating,
-                idyoutube: idyoutube,
-                type: type,
-              )));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AnimeDetailScreen(
+                        title: title,
+                        imageUrl: imageUrl,
+                        url: url,
+                        synopsis: synopsis,
+                        id: id,
+                        score: score,
+                        trailer: trailer,
+                        genres: genres,
+                        episodes: episodes,
+                        duration: duration,
+                        ranking: rank,
+                        favorite: favorite,
+                        member: member,
+                        popularity: popularity,
+                        status: status,
+                        season: season,
+                        studio: studio,
+                        source: source,
+                        rating: rating,
+                        idyoutube: idyoutube,
+                        type: type,
+                      )));
         },
         child: Stack(
           children: [
@@ -588,9 +606,8 @@ final user = _myBox.get(username);
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
-                  borderRadius:BorderRadius.circular(16)
-                ),
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(16)),
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
@@ -609,7 +626,6 @@ final user = _myBox.get(username);
                         fontFamily: 'Poppins',
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -631,11 +647,10 @@ final user = _myBox.get(username);
                   title!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontFamily: "Raleway"
-                  ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: "Raleway"),
                 ),
               ),
             ),
@@ -649,83 +664,82 @@ final user = _myBox.get(username);
     final temp = animeData;
     final title = animeData['title'] as String?;
     final imageUrl = animeData['images']['jpg']['image_url'] as String?;
-    final score = animeData['score'] is int ? animeData['score'].toDouble() : animeData['score'];
+    final score = animeData['score'] is int
+        ? animeData['score'].toDouble()
+        : animeData['score'];
     final url = animeData['url'] as String?;
     final synopsis = animeData['synopsis'] as String?;
     final id = animeData['mal_id'] as int;
     final trailer = animeData['trailer']['url'] as String?;
-    final genres = (animeData['genres'] as List).map((
-        genre) => genre['name'] as String).toList();
+    final genres = (animeData['genres'] as List)
+        .map((genre) => genre['name'] as String)
+        .toList();
     final episodes = animeData['episodes'] as int?;
     final duration = animeData['duration'] as String?;
     final rank = animeData['rank'] as int?;
     final favorite = animeData['favorites'] as int?;
     final member = animeData['members'] as int?;
     final popularity = animeData['popularity'] as int?;
-    final status =animeData['status'] as String?;
-    final season =animeData['season'] as String?;
+    final status = animeData['status'] as String?;
+    final season = animeData['season'] as String?;
     final studios = animeData['studios'];
-    final studio = studios != null && studios.isNotEmpty && studios[0] != null ? studios[0]['name'] as String? : '';
-    final source =animeData['source'] as String?;
-    final rating =animeData['rating'] as String?;
+    final studio = studios != null && studios.isNotEmpty && studios[0] != null
+        ? studios[0]['name'] as String?
+        : '';
+    final source = animeData['source'] as String?;
+    final rating = animeData['rating'] as String?;
     final idyoutube = animeData['trailer']['youtube_id'] as String?;
-    final type =animeData['type'] as String?;
+    final type = animeData['type'] as String?;
 
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-
-
-
       ),
       margin: EdgeInsets.symmetric(horizontal: 8),
       width: 370,
-
-
       child: InkWell(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AnimeDetailScreen(
-                title: title,
-                imageUrl: imageUrl,
-                url: url,
-                synopsis: synopsis,
-                id: id,
-                score: score,
-                trailer: trailer,
-                genres: genres,
-                episodes: episodes,
-                duration: duration,
-                ranking: rank,
-                favorite: favorite,
-                member: member,
-                popularity: popularity,
-                status: status,
-                season: season,
-                studio: studio,
-                source: source,
-                rating: rating,
-                idyoutube: idyoutube,
-                type: type,
-              )));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AnimeDetailScreen(
+                        title: title,
+                        imageUrl: imageUrl,
+                        url: url,
+                        synopsis: synopsis,
+                        id: id,
+                        score: score,
+                        trailer: trailer,
+                        genres: genres,
+                        episodes: episodes,
+                        duration: duration,
+                        ranking: rank,
+                        favorite: favorite,
+                        member: member,
+                        popularity: popularity,
+                        status: status,
+                        season: season,
+                        studio: studio,
+                        source: source,
+                        rating: rating,
+                        idyoutube: idyoutube,
+                        type: type,
+                      )));
         },
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl!),
-                  fit: BoxFit.cover,
-                ),
-                  borderRadius: BorderRadius.circular(10)
-              ),
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl!),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(10)),
             ),
             Container(
-decoration: BoxDecoration(
-  color: Colors.black.withOpacity(0.7),
-    borderRadius: BorderRadius.circular(10)
-),
-
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10)),
             ),
             Positioned(
               bottom: 0,
@@ -734,14 +748,12 @@ decoration: BoxDecoration(
               child: Container(
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.75), // Menetapkan transparansi sebesar 50%
+                  color: Colors.black
+                      .withOpacity(0.75), // Menetapkan transparansi sebesar 50%
                   borderRadius: BorderRadius.circular(10),
                 ),
-
-
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
@@ -794,7 +806,6 @@ decoration: BoxDecoration(
                                       fontFamily: "Poppins",
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -802,26 +813,21 @@ decoration: BoxDecoration(
                         ],
                       ),
                     ),
-
-
                     SizedBox(width: 16),
                     Expanded(
-                      child: Container(
-                        alignment: Alignment.bottomLeft,
-                        height: 90,
-
-                        child:
-                        Text(
-                          title!,
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: "Raleway",
-                          ),
+                        child: Container(
+                      alignment: Alignment.bottomLeft,
+                      height: 90,
+                      child: Text(
+                        title!,
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: "Raleway",
                         ),
-                      )
-                    ),
+                      ),
+                    )),
                   ],
                 ),
               ),
@@ -857,16 +863,9 @@ decoration: BoxDecoration(
                 ),
               ),
             ),
-
-
-
-
-
           ],
         ),
       ),
     );
-
-
   }
 }
