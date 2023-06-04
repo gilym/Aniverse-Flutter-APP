@@ -5,8 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/favorite.dart';
-import 'package:rillanime/konversiuang.dart';
-import 'package:rillanime/setting.dart';
+
 import 'package:rillanime/subscribe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

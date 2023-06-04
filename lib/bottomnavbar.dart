@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:rillanime/profile.dart';
 import 'package:rillanime/schedule.dart';
-import 'package:rillanime/setting.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard.dart';
 import 'discover.dart';
@@ -71,7 +71,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
       discover(),
       schedule(),
       profile(),
-      setting(),
       Container(), // Empty container for logout
     ];
 
@@ -116,10 +115,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 30),
               label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle, size: 30),
-              label: 'Data Diri',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.logout, size: 30),
