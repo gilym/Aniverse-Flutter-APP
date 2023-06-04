@@ -17,5 +17,19 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/1.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/2.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/3.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/4.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/5.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/6.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/7.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/8.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/9.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/10.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/11.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/12.png)
+![Teks Alternatif](https://github.com/gilym/ProjectPrakTPM/blob/main/Presentation/13.png)
+
+
 
 
