@@ -3,6 +3,10 @@
 Project Akhir Prak TPM.
 Anime Wiki App
 
+Aniverse is a Flutter-based application that provides information about anime sourced from the Jikan.moe API. It serves as a platform for users to explore and discover various anime series and movies,
+
+The primary goal of Aniverse is to offer a comprehensive database of anime content and deliver it to users in a user-friendly and visually appealing manner. Users can browse through a wide range of anime titles, read detailed descriptions, view ratings and reviews, and access essential information such as release dates, genres, episode counts, and more.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
