@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:rillanime/DetailPage.dart';
 import 'package:rillanime/bottomnavbar.dart';
 import 'package:rillanime/count.dart';
-
+import 'fetching/fetch.dart';
 import 'package:rillanime/viewmore.dart';
-import 'fetching/fetchschedule.dart';
+
 
 import 'dashboard.dart';
 import 'main.dart';
@@ -26,6 +26,7 @@ class _scheduleState extends State<schedule> {
   late List<dynamic> friday;
   late List<dynamic> saturday;
   late List<dynamic> sunday;
+  late List<dynamic> airing;
   bool isLoading = true;
   bool isDataLoaded = false;
 
@@ -40,88 +41,22 @@ class _scheduleState extends State<schedule> {
     friday = [];
     saturday = [];
     sunday = [];
+    airing = [];
     int completedProcesses = 0;
-    int totalProcesses = 5; // Update the total number of processes
+    int totalProcesses = 1; // Update the total number of processes
 
-    void checkCompletion() {
-      completedProcesses++;
-      if (completedProcesses == totalProcesses) {
-        setState(() {
-          isLoading = false; // Loading completed
-          isDataLoaded = true; // All data loaded successfully
-        });
-      }
-
-    }
-    getMonday.fetchday().then((data) {
+    isLoading = true;
+    getAired.getaired().then((data) {
       setState(() {
-        monday = data;
+        airing = data;
       });
-      checkCompletion();
+     isLoading=false;
     }).catchError((error) {
       print(error);
-      checkCompletion();
+      isLoading=false;
     });
 
-    getTuesday.fetchday().then((data) {
-      setState(() {
-        tuesday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
 
-    getWednesday.fetchday().then((data) {
-      setState(() {
-        wednesday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
-
-    getThursday.fetchday().then((data) {
-      setState(() {
-        thursday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
-
-    getFriday.fetchday().then((data) {
-      setState(() {
-        friday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
-
-    getSaturday.fetchday().then((data) {
-      setState(() {
-        saturday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
-
-    getSunday.fetchday().then((data) {
-      setState(() {
-        sunday = data;
-      });
-      checkCompletion();
-    }).catchError((error) {
-      print(error);
-      checkCompletion();
-    });
   }
 
 
@@ -133,18 +68,19 @@ class _scheduleState extends State<schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-      body: ListView(
+      body:isLoading // Tampilkan loading jika sedang mengambil data
+          ? Center(child: CircularProgressIndicator()) : ListView(
         padding: EdgeInsets.only(top: 50),
         children: [
-         tile("Sunday", sunday),
+         tile("Sunday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Sundays").toList()),
           SizedBox(height: 20,),
           SizedBox(
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:  sunday.where((item) => item["broadcast"]["time"] != null).length,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Sundays").toList().length,
               itemBuilder: (context, index) {
-                final anime = sunday.where((item) => item["broadcast"]["time"] != null).toList()[index];
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Sundays").toList()[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Aired(anime),
@@ -152,33 +88,16 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-          SizedBox(height: 30,),
-          tile("Monday", monday),
+          // Senin
+          tile("Monday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Mondays").toList()),
           SizedBox(height: 20,),
           SizedBox(
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:  monday.where((item) => item["broadcast"]["time"] != null).length,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Mondays").toList().length,
               itemBuilder: (context, index) {
-                final anime = monday.where((item) => item["broadcast"]["time"] != null).toList()[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: Aired(anime),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 30,),
-          tile("Tuesday", tuesday),
-          SizedBox(height: 20,),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount:  tuesday.where((item) => item["broadcast"]["time"] != null).length,
-              itemBuilder: (context, index) {
-                final anime = tuesday.where((item) => item["broadcast"]["time"] != null).toList()[index];
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Mondays").toList()[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Aired(anime),
@@ -187,16 +106,16 @@ class _scheduleState extends State<schedule> {
             ),
           ),
 
-          SizedBox(height: 30,),
-          tile("Wednesday", wednesday),
+// Selasa
+          tile("Tuesday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Tuesdays").toList()),
           SizedBox(height: 20,),
           SizedBox(
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:  wednesday.where((item) => item["broadcast"]["time"] != null).length,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Tuesdays").toList().length,
               itemBuilder: (context, index) {
-                final anime = wednesday.where((item) => item["broadcast"]["time"] != null).toList()[index];
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Tuesdays").toList()[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Aired(anime),
@@ -204,34 +123,17 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-          SizedBox(height: 30,),
-          tile("Thursday", thursday),
-          SizedBox(height: 20,),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount:  thursday.where((item) => item["broadcast"]["time"] != null).length,
-              itemBuilder: (context, index) {
-                final anime = thursday.where((item) => item["broadcast"]["time"] != null).toList()[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: Aired(anime),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 30,),
 
-          tile("Friday", friday),
+// Rabu
+          tile("Wednesday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Wednesdays").toList()),
           SizedBox(height: 20,),
           SizedBox(
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:  friday.where((item) => item["broadcast"]["time"] != null).length,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Wednesdays").toList().length,
               itemBuilder: (context, index) {
-                final anime = friday.where((item) => item["broadcast"]["time"] != null).toList()[index];
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Wednesdays").toList()[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Aired(anime),
@@ -239,16 +141,17 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
-          SizedBox(height: 30,),
-          tile("Saturday", saturday),
+
+// Kamis
+          tile("Thursday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Thursdays").toList()),
           SizedBox(height: 20,),
           SizedBox(
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:  saturday.where((item) => item["broadcast"]["time"] != null).length,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Thursdays").toList().length,
               itemBuilder: (context, index) {
-                final anime = saturday.where((item) => item["broadcast"]["time"] != null).toList()[index];
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Thursdays").toList()[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: Aired(anime),
@@ -256,6 +159,43 @@ class _scheduleState extends State<schedule> {
               },
             ),
           ),
+
+// Jumat
+          tile("Friday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Fridays").toList()),
+          SizedBox(height: 20,),
+          SizedBox(
+            height: 250,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Fridays").toList().length,
+              itemBuilder: (context, index) {
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Fridays").toList()[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  child: Aired(anime),
+                );
+              },
+            ),
+          ),
+
+// Sabtu
+          tile("Saturday", airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Saturdays").toList()),
+          SizedBox(height: 20,),
+          SizedBox(
+            height: 250,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount:  airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Saturdays").toList().length,
+              itemBuilder: (context, index) {
+                final anime = airing.where((item) => (item["broadcast"]["time"] != null) && item["broadcast"]["day"]=="Saturdays").toList()[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  child: Aired(anime),
+                );
+              },
+            ),
+          ),
+
         ],
       ),
     );
@@ -300,6 +240,7 @@ class _scheduleState extends State<schedule> {
     final timezone = animeData['broadcast']['timezone'] as String?;
     final string = animeData['broadcast']['string'] as String?;
     final score = animeData['score'] is int ? animeData['score'].toDouble() : animeData['score'];
+
 
     return Container(
       decoration: BoxDecoration(

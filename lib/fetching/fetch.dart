@@ -12,7 +12,7 @@ class getTop {
   static Future<List<dynamic>> fetchtop() async {
     List<dynamic> animeData = [];
     try {
-      for (int page = 1; page <= 100; page++) { // ambil data pada halaman 1-5
+      for (int page = 1; page <= 150; page++) { // ambil data pada halaman 1-5
         final url = "https://api.jikan.moe/v4/top/anime?page=$page";
         final file = await DefaultCacheManager().getSingleFile(url);
         final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));
@@ -23,6 +23,7 @@ class getTop {
       print(error);
     }
     return animeData;
+
   }
 }
 
@@ -41,13 +42,13 @@ class getGenre {
     return animeData;
   }
 }
-class getUpcoming {
-  static Future<List<dynamic>> getupcoming() async {
+class getFavorites {
+  static Future<List<dynamic>> getfaborites() async {
     List<dynamic> animeData = [];
 
     try {
       for (int page = 1; page <= 10; page++) { // ambil data pada halaman 1-5
-        final url = "https://api.jikan.moe/v4/top/anime?page=$page&filter=upcoming";
+        final url = "https://api.jikan.moe/v4/top/anime?page=$page&filter=favorite";
         final file = await DefaultCacheManager().getSingleFile(url);
         final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));
 
@@ -67,7 +68,7 @@ class getAired {
     List<dynamic> animeData = [];
 
     try {
-      for (int page = 1; page <= 10; page++) { // ambil data pada halaman 1-5
+      for (int page = 1; page <= 20; page++) { // ambil data pada halaman 1-5
         final url = "https://api.jikan.moe/v4/top/anime?page=$page&filter=airing";
         final file = await DefaultCacheManager().getSingleFile(url);
         final response = await file.readAsString().then((jsonString) => jsonDecode(jsonString));

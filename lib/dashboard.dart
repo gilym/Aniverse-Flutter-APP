@@ -25,7 +25,7 @@ class _DashboardState extends State<Dashboard> {
   late List<dynamic> alldata;
   late List<dynamic> topanime;
   late List<dynamic> genreanime;
-  late List<dynamic> upcoming;
+  late List<dynamic> favorite;
   late List<dynamic> airing;
   late List<dynamic> popular;
   late List<dynamic> fav;
@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
     alldata = [];
     topanime = [];
     genreanime = [];
-    upcoming = [];
+    favorite = [];
     airing = [];
     popular = [];
 
@@ -90,9 +90,9 @@ class _DashboardState extends State<Dashboard> {
       checkCompletion();
     });
 
-    getUpcoming.getupcoming().then((data) {
+    getFavorites.getfaborites().then((data) {
       setState(() {
-        upcoming = data;
+        favorite = data;
       });
       checkCompletion();
     }).catchError((error) {
@@ -137,8 +137,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     print(username);
-    final random = Random();
-    airing.shuffle(random);
+
     final user = _myBox.get(username);
     if (isLoading) {
       // Tampilkan tampilan loading saat data sedang dimuat
@@ -152,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
               CircleAvatar(
                 radius: 15,
                 backgroundImage:
-                    AssetImage(user?.image ?? 'fallback_image_path'),
+                AssetImage(user?.image ?? 'fallback_image_path'),
               ),
               SizedBox(width: 10),
               Text(
@@ -180,10 +179,10 @@ class _DashboardState extends State<Dashboard> {
                 child: Darkmode
                     ? Icon(Icons.brightness_3, size: 30)
                     : Icon(
-                        Icons.wb_sunny_outlined,
-                        size: 30,
-                        color: Colors.deepOrangeAccent,
-                      ),
+                  Icons.wb_sunny_outlined,
+                  size: 30,
+                  color: Colors.deepOrangeAccent,
+                ),
               ),
             ),
           ],
@@ -209,7 +208,7 @@ class _DashboardState extends State<Dashboard> {
                 CircleAvatar(
                   radius: 15,
                   backgroundImage:
-                      AssetImage(user?.image ?? 'fallback_image_path'),
+                  AssetImage(user?.image ?? 'fallback_image_path'),
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -229,7 +228,7 @@ class _DashboardState extends State<Dashboard> {
                   setState(() {
                     Darkmode = !Darkmode;
                     Background =
-                        Darkmode ? Color(0xFF131313) : Color(0xFFEBEBEB);
+                    Darkmode ? Color(0xFF131313) : Color(0xFFEBEBEB);
                     fontcollor = Darkmode ? Colors.white : Colors.black;
                   });
                 },
@@ -238,10 +237,10 @@ class _DashboardState extends State<Dashboard> {
                   child: Darkmode
                       ? Icon(Icons.brightness_3, size: 30)
                       : Icon(
-                          Icons.wb_sunny_outlined,
-                          size: 30,
-                          color: Colors.deepOrangeAccent,
-                        ),
+                    Icons.wb_sunny_outlined,
+                    size: 30,
+                    color: Colors.deepOrangeAccent,
+                  ),
                 ),
               ),
             ],
@@ -254,9 +253,9 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => viewmore(
-                                  data: topanime.sublist(0, 25),
-                                  title: "Top Rating Anime ",
-                                )));
+                              data: topanime.sublist(0, 25),
+                              title: "Top Rating Anime ",
+                            )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -305,9 +304,9 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => viewmore(
-                                  data: genreanime,
-                                  title: "Genres",
-                                )));
+                              data: genreanime,
+                              title: "Genres",
+                            )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -336,12 +335,12 @@ class _DashboardState extends State<Dashboard> {
                   scrollDirection: Axis.horizontal,
                   itemCount: genreanime
                       .where((genre) =>
-                          genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
+                  genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
                       .length,
                   itemBuilder: (context, index) {
                     final genre1 = genreanime
                         .where((genre) =>
-                            genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
+                    genre['mal_id'] >= 1 && genre['mal_id'] <= 10)
                         .toList()[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -359,9 +358,9 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => viewmore(
-                                  data: upcoming,
-                                  title: "Upcoming",
-                                )));
+                              data: favorite,
+                              title: "Most Favorite",
+                            )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -369,7 +368,7 @@ class _DashboardState extends State<Dashboard> {
                       Container(
                         margin: EdgeInsets.only(left: 10),
                         child: Text(
-                          "Upcoming",
+                          "Most Favorite",
                           style: TextStyle(
                               color: fontcollor,
                               fontFamily: "Poppins",
@@ -383,14 +382,15 @@ class _DashboardState extends State<Dashboard> {
                         size: 35,
                       )
                     ],
+
                   )),
               SizedBox(
                 height: 260,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: upcoming.length,
+                  itemCount: favorite.length,
                   itemBuilder: (context, index) {
-                    final anime = upcoming[index];
+                    final anime = favorite[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: _buildAnimeCard(anime),
@@ -407,9 +407,9 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => viewmore(
-                                  data: airing,
-                                  title: "Currently Airing",
-                                )));
+                              data: airing,
+                              title: "Currently Airing",
+                            )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -455,9 +455,9 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => viewmore(
-                                  data: popular,
-                                  title: "Most Popular",
-                                )));
+                              data: popular,
+                              title: "Most Popular",
+                            )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -504,28 +504,28 @@ class _DashboardState extends State<Dashboard> {
     // print(topanime.length);
     return Container(
         child: InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => viewbygenre(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => viewbygenre(
                       data: topanime,
                       title: name,
                     )));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: Chip(
-          label: Text(name),
-          backgroundColor: Darkmode ? Color(0xFF4F576F) : Color(0xFF131313),
-          labelStyle: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
-              fontFamily: "Raleway"),
-        ),
-      ),
-    ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Chip(
+              label: Text(name),
+              backgroundColor: Darkmode ? Color(0xFF4F576F) : Color(0xFF131313),
+              labelStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  fontFamily: "Raleway"),
+            ),
+          ),
+        ));
   }
 
   Card _buildAnimeCard(Map<String, dynamic> animeData) {
@@ -569,28 +569,28 @@ class _DashboardState extends State<Dashboard> {
               context,
               MaterialPageRoute(
                   builder: (context) => AnimeDetailScreen(
-                        title: title,
-                        imageUrl: imageUrl,
-                        url: url,
-                        synopsis: synopsis,
-                        id: id,
-                        score: score,
-                        trailer: trailer,
-                        genres: genres,
-                        episodes: episodes,
-                        duration: duration,
-                        ranking: rank,
-                        favorite: favorite,
-                        member: member,
-                        popularity: popularity,
-                        status: status,
-                        season: season,
-                        studio: studio,
-                        source: source,
-                        rating: rating,
-                        idyoutube: idyoutube,
-                        type: type,
-                      )));
+                    title: title,
+                    imageUrl: imageUrl,
+                    url: url,
+                    synopsis: synopsis,
+                    id: id,
+                    score: score,
+                    trailer: trailer,
+                    genres: genres,
+                    episodes: episodes,
+                    duration: duration,
+                    ranking: rank,
+                    favorite: favorite,
+                    member: member,
+                    popularity: popularity,
+                    status: status,
+                    season: season,
+                    studio: studio,
+                    source: source,
+                    rating: rating,
+                    idyoutube: idyoutube,
+                    type: type,
+                  )));
         },
         child: Stack(
           children: [
@@ -703,28 +703,28 @@ class _DashboardState extends State<Dashboard> {
               context,
               MaterialPageRoute(
                   builder: (context) => AnimeDetailScreen(
-                        title: title,
-                        imageUrl: imageUrl,
-                        url: url,
-                        synopsis: synopsis,
-                        id: id,
-                        score: score,
-                        trailer: trailer,
-                        genres: genres,
-                        episodes: episodes,
-                        duration: duration,
-                        ranking: rank,
-                        favorite: favorite,
-                        member: member,
-                        popularity: popularity,
-                        status: status,
-                        season: season,
-                        studio: studio,
-                        source: source,
-                        rating: rating,
-                        idyoutube: idyoutube,
-                        type: type,
-                      )));
+                    title: title,
+                    imageUrl: imageUrl,
+                    url: url,
+                    synopsis: synopsis,
+                    id: id,
+                    score: score,
+                    trailer: trailer,
+                    genres: genres,
+                    episodes: episodes,
+                    duration: duration,
+                    ranking: rank,
+                    favorite: favorite,
+                    member: member,
+                    popularity: popularity,
+                    status: status,
+                    season: season,
+                    studio: studio,
+                    source: source,
+                    rating: rating,
+                    idyoutube: idyoutube,
+                    type: type,
+                  )));
         },
         child: Stack(
           children: [
@@ -816,18 +816,18 @@ class _DashboardState extends State<Dashboard> {
                     SizedBox(width: 16),
                     Expanded(
                         child: Container(
-                      alignment: Alignment.bottomLeft,
-                      height: 90,
-                      child: Text(
-                        title!,
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: "Raleway",
-                        ),
-                      ),
-                    )),
+                          alignment: Alignment.bottomLeft,
+                          height: 90,
+                          child: Text(
+                            title!,
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: "Raleway",
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
