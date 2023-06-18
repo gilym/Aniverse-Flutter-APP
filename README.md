@@ -1,5 +1,7 @@
 # Aniverse
 
+## Perhaps some menus are not displayed because there are issues with some endpoints of the jikan.moe API.
+
 Project Akhir Prak TPM.
 Anime Wiki App
 
